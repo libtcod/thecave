@@ -11,7 +11,7 @@ Sound::Sound() {}
 //initializes sound
 void Sound::initialize (void) {
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO)==-1) {
-		printf("Warning : could not initialize sound system : %s", SDL_GetError());
+		printf("Warning : could not initialize sound system : %s\n", SDL_GetError());
 		return;
 	}
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024)==-1) {
@@ -19,7 +19,7 @@ void Sound::initialize (void) {
 		return;
 	}
 	if (Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
-		printf("Warning : failed to load OGG support : %s", Mix_GetError());
+		printf("Warning : failed to load OGG support : %s\n", Mix_GetError());
 		return;
 	}
 }
@@ -35,7 +35,7 @@ void Sound::load (const char * filename) {
 	unload();
 	snd = Mix_LoadMUS(filename);
 	if (!snd) {
-		printf("Warning : could not load sound %s : %s", filename, Mix_GetError());
+		printf("Warning : could not load sound %s : %s\n", filename, Mix_GetError());
 	}
 }
 
@@ -62,7 +62,11 @@ void Sound::playLoop() {
 
 //pause or unpause the sound
 void Sound::setPause (bool pause) {
-	Mix_PauseMusic();
+	if (pause){
+		Mix_PauseMusic();
+	} else {
+		Mix_ResumeMusic();
+	}
 }
 
 void Sound::update() {}
@@ -70,9 +74,5 @@ void Sound::endFrame() {}
 
 //toggle pause on and off
 void Sound::togglePause (void) {
-	if (Mix_PausedMusic()){
-		Mix_ResumeMusic();
-	} else {
-		Mix_PauseMusic();
-	}
+	setPause(!Mix_PausedMusic());
 }
