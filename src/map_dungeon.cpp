@@ -152,7 +152,7 @@ void Dungeon::finalizeMap(bool roundCorners, bool blurGround) {
 		    if (map2x->isTransparent(x,y)) {
 		        // ground
 		        float f[2]={ x/3.0f, y/3.0f };
-		        float coef = 1.0f + noiseDepth*noise2d.getFbmSimplex(f,3.0f);
+		        float coef = 1.0f + noiseDepth*noise2d.getFbm(f, 3.0f, TCOD_NOISE_SIMPLEX);
                 setGroundColor(x,y, groundColor * coef);
 		    } else {
                 // wall
@@ -277,7 +277,7 @@ Dungeon::~Dungeon() {
 }
 
 void Dungeon::getClosestWalkable(int *x, int *y, bool includingStairs, bool includingCreatures, bool includingWater) const {
-	if ( map->isWalkable(*x,*y)  
+	if ( map->isWalkable(*x,*y)
 		&& (includingStairs || *x != stairx || *y != stairy )
 		&& (includingCreatures || ! hasCreature(*x,*y) )
 		&& (includingWater || !hasRipples(*x,*y))
@@ -301,7 +301,7 @@ void Dungeon::getClosestWalkable(int *x, int *y, bool includingStairs, bool incl
 					&& (includingStairs || cx != stairx || cy != stairy )
 					&& (includingCreatures || ! hasCreature(cx,cy) )
 					&& (includingWater || !hasRipples(cx,cy) )
-					
+
 				) {
 					int curdist=SQRDIST(*x,*y,cx,cy);
 					if ( curdist < dist ) {
@@ -528,7 +528,7 @@ void Dungeon::renderSubcellCreatures(LightMap *lightMap) {
 			if (IN_RECTANGLE((*it)->x,(*it)->y,size,size)) {
 				if ( map->isInFov((int)(*it)->x,(int)(*it)->y) ) (*it)->render(lightMap);
 				if ( (*it)->isTalking() ) (*it)->renderTalk();
-			} 
+			}
 		}
 	}
 }
@@ -540,7 +540,7 @@ void Dungeon::updateCreatures(float elapsed) {
 	for ( int i=0; i < creatures.size(); i++ ) {
 		Creature *cr=creatures.get(i);
 		if ( cr->toDelete ) {
-			toDelete.push(cr); 
+			toDelete.push(cr);
 		} else if ((cr->isUpdatedOffscreen() || cr->isOnScreen()) && !cr->update(elapsed)) {
 			toDelete.push(cr);
 			removeCreature(cr); // from creature map
@@ -685,7 +685,7 @@ void Dungeon::renderItems(LightMap *lightMap) {
 		if ( (unsigned)x < (unsigned)size ) {
 			int dy=(int)(sqrtf(player->fovRange*player->fovRange - tx*tx)*aspectRatio);
 			for (int ty=-dy; ty <= dy; ty++) {
-				int y=(int)(player->y+ty);		
+				int y=(int)(player->y+ty);
 				if ( (unsigned)y < (unsigned)size && map->isInFov(x,y) && ! terrainTypes[getTerrainType(x,y)].swimmable) {
 					Item *it=getFirstItem(x,y);
 					if ( it && it->speed == 0.0f ) {
@@ -745,8 +745,8 @@ void Dungeon::computeFov(int x, int y) {
 	for (int cx=minx; cx <= maxx; cx++) {
 		for (int cy=miny; cy <= maxy; cy++) {
 			map->setInFov(cx,cy,map2x->isInFov(cx*2,cy*2)
-				|| map2x->isInFov(cx*2+1,cy*2) 
-				|| map2x->isInFov(cx*2,cy*2+1) 
+				|| map2x->isInFov(cx*2+1,cy*2)
+				|| map2x->isInFov(cx*2,cy*2+1)
 				|| map2x->isInFov(cx*2+1,cy*2+1)
 				);
 		}
@@ -761,7 +761,7 @@ void Dungeon::applyShadowMap() {
 			col = col * getShadow(x,y);
 			setGroundColor(x,y,col);
 		}
-	}	
+	}
 }
 
 #define SQR(x) ((x)*(x))
@@ -817,7 +817,7 @@ void Dungeon::saveData(uint32 chunkId, TCODZip *zip) {
 	zip->putData(smap->w*smap->h*sizeof(float),smap->values);
 	zip->putData(smapBeforeTree->w*smapBeforeTree->h*sizeof(float),smapBeforeTree->values);
 	zip->putImage(canopy);
-	
+
 	// save the creatures
 	int nbCreaturesToSave=0;
 	for (Creature **it=creatures.begin(); it != creatures.end(); it++ ) {
@@ -826,25 +826,25 @@ void Dungeon::saveData(uint32 chunkId, TCODZip *zip) {
 	zip->putInt(nbCreaturesToSave);
 	for (Creature **it=creatures.begin(); it != creatures.end(); it++ ) {
 		if ( (*it)->mustSave() ) {
-			zip->putInt((*it)->type);		
+			zip->putInt((*it)->type);
 			(*it)->saveData(CREA_CHUNK_ID,zip);
 		}
 	}
 	// save the corpses
 	zip->putInt(corpses.size());
 	for (Creature **it=corpses.begin(); it != corpses.end(); it++ ) {
-		zip->putInt((*it)->type);		
+		zip->putInt((*it)->type);
 		(*it)->saveData(CREA_CHUNK_ID,zip);
 	}
 	// save the items on ground
 	int nbItemsToSave=0;
 	for (int i=0; i < size*size; i++) {
-		nbItemsToSave += cells[i].items.size();		
+		nbItemsToSave += cells[i].items.size();
 	}
 	zip->putInt(nbItemsToSave);
 	for (int i=0; i < size*size; i++) {
 		for (Item **it = cells[i].items.begin(); it != cells[i].items.end(); it++) {
-			zip->putInt((*it)->typeData->id);	
+			zip->putInt((*it)->typeData->id);
 			(*it)->saveData(ITEM_CHUNK_ID,zip);
 		}
 	}
@@ -871,7 +871,7 @@ bool Dungeon::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	canopy = zip->getImage();
 	GameEngine::instance->displayProgress(0.7f);
 
-	// load the creatures		
+	// load the creatures
 	int nbCreatures=zip->getInt();
 	while ( nbCreatures > 0 ) {
 		CreatureTypeId creatureId=(CreatureTypeId)zip->getInt();
@@ -885,7 +885,7 @@ bool Dungeon::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 		addCreature(crea);
 		nbCreatures--;
 	}
-	
+
 	// load the corpses
 	int nbCorpses=zip->getInt();
 	while ( nbCorpses > 0 ) {
@@ -901,7 +901,7 @@ bool Dungeon::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 		nbCorpses--;
 	}
 	GameEngine::instance->displayProgress(0.8f);
-	
+
 	// load the items
 	int nbItems = zip->getInt();
 	while (nbItems > 0 ) {
@@ -915,7 +915,7 @@ bool Dungeon::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 		nbItems--;
 	}
 	GameEngine::instance->displayProgress(0.9f);
-	
+
 	return true;
 }
 

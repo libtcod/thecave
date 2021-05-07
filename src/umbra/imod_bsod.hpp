@@ -24,6 +24,7 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include <cstdint>
 
 class UmbraModBSOD : public UmbraWidget {
     public:
@@ -33,7 +34,7 @@ class UmbraModBSOD : public UmbraWidget {
     private:
         void activate ();
         TCODConsole * bsod;
-        uint32 startTime;
-        uint32 duration;
+        uint32_t startTime;
+        uint32_t duration;
         std::string msgString;
 };

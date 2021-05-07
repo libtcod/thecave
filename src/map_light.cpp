@@ -93,13 +93,13 @@ void Light::addToLightMap(LightMap *lightmap) {
 					if ( randomRad ) {
 						float angle=atan2f(dy,dx);
 						float f=angle+noiseOffset;
-						float squaredRangeRnd=squaredRange*(0.5f*(1.0f+noise1d.getSimplex(&f)));
+						float squaredRangeRnd=squaredRange*(0.5f*(1.0f+noise1d.get(&f, TCOD_NOISE_SIMPLEX)));
 						// fix radius continuity near -PI
 						float rcoef=0.0f;
 						if ( angle < -7*M_PI/8) rcoef = (-7*M_PI/8-angle)/(M_PI/8);
 						if ( rcoef > 1E-6f ) {
 							float fpi=M_PI+noiseOffset;
-							float squaredRangePi=squaredRange*(0.5f*(1.0f+noise1d.getSimplex(&fpi)));
+							float squaredRangePi=squaredRange*(0.5f*(1.0f+noise1d.get(&fpi, TCOD_NOISE_SIMPLEX)));
 							squaredRangeRnd=squaredRangeRnd + rcoef*(squaredRangePi-squaredRangeRnd);
 						}
 						rad=crange/squaredRangeRnd;
@@ -153,7 +153,7 @@ float ExtendedLight::getIntensity() {
 	if (intensityPatternLen == 0 ) return 1.0f;
 	if ( noiseIntensity ) {
 		float f=noiseOffset+intensityTimer*intensityPatternDelay;
-		return 0.5f*(1.0f+noise1d.getSimplex(&f));
+		return 0.5f*(1.0f+noise1d.get(&f, TCOD_NOISE_SIMPLEX));
 	}
 	int itchar=intensityPattern[ (int)(intensityTimer*intensityPatternLen/intensityPatternDelay) ];
 	return (float)(itchar-'0')/9.0f;

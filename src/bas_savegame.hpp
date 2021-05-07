@@ -23,6 +23,13 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#pragma once
+
+#include <cstdint>
+
+#include <libtcod.h>
+
+typedef uint32_t uint32;
 
 #define SAVEGAME_MAGIC_NUMBER 0xFD051E4F
 

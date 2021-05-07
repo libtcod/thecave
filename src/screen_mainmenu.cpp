@@ -25,6 +25,7 @@
 */
 #include <math.h>
 #include <stdio.h>
+#include <cstdint>
 #include "main.hpp"
 
 MainMenu *MainMenu::instance=NULL;
@@ -37,11 +38,11 @@ static TCODImage *rock=NULL;
 static TCODImage *rockNormal=NULL;
 static const int MENUX=6;
 static const int MENUW=10;
-static const int MENUY=CON_H/2+17; 
+static const int MENUY=CON_H/2+17;
 
 static const char *menuNames[MENU_NB_ITEMS] = {
 	"New game",
-	"Continue",	
+	"Continue",
 	"Exit"
 };
 
@@ -56,18 +57,18 @@ struct WorldGenThreadData {
 };
 
 int generateWorld(void *dat) {
-	uint32 seed = (uint32)(uintptr)dat;
+	uint32 seed = (uint32)(uintptr_t)dat;
 	if ( Config::getBool("config.debug") ) {
 		printf ("World seed : %d\n",seed);
 	}
-	// DISABLED 
+	// DISABLED
 //	SchoolScreen::instance->generateWorld(seed);
 //	TCODSystem::unlockSemaphore(data->worldDone);
 	return 0;
 }
 
 int generateForest(void *dat) {
-	uint32 seed = (uint32)(uintptr)dat;
+	uint32 seed = (uint32)(uintptr_t)dat;
 	if ( Config::getBool("config.debug") ) {
 		printf ("Forest seed : %d\n",seed);
 	}
@@ -77,7 +78,7 @@ int generateForest(void *dat) {
 }
 
 int loadForest(void *dat) {
-	uint32 seed = (uint32)(uintptr)dat;
+	uint32 seed = (uint32)(uintptr_t)dat;
 	if ( Config::getBool("config.debug") ) {
 		printf ("Forest seed : %d\n",seed);
 	}
@@ -132,11 +133,11 @@ void MainMenu::render() {
 		}
 		if ( elapsed >= 0.0f && elapsed < 12.0f ) {
 			fireCoef=(elapsed-0.0f)/12.0f;
-		} else if ( elapsed >= 12.0f ) fireCoef=1.0f;		
+		} else if ( elapsed >= 12.0f ) fireCoef=1.0f;
 		if ( elapsed >= 12.0f && elapsed < 20.0f ) {
 			titleCoef=(elapsed-12.0f)/8.0f;
-		} else if ( elapsed >= 20.0f ) titleCoef=1.0f;		
-		if ( userPref.nbLaunches > 1 && ! newGame ) {	
+		} else if ( elapsed >= 20.0f ) titleCoef=1.0f;
+		if ( userPref.nbLaunches > 1 && ! newGame ) {
 			if ( elapsed >= 18.0f && elapsed < 28.0f ) {
 				chapterPixCoef=0.7f*(elapsed-18.0f)/10.0f;
 			} else if ( elapsed >= 28.0f ) chapterPixCoef=0.7f;
@@ -151,13 +152,13 @@ void MainMenu::render() {
 		}
 		fire->generateImage();
 		float f=elapsed*8.0f;
-		float lightCoef=noise1d.getFbmSimplex(&f,3.0f);
+		float lightCoef=noise1d.getFbm(&f, 3.0f, TCOD_NOISE_SIMPLEX);
 		f = elapsed*1.5f;
-		float torchposx=noise1d.getFbmSimplex(&f,3.0f);
-		f += 50.0f;		
-		float torchposy=noise1d.getFbmSimplex(&f,3.0f);
+		float torchposx=noise1d.getFbm(&f, 3.0f, TCOD_NOISE_SIMPLEX);
+		f += 50.0f;
+		float torchposy=noise1d.getFbm(&f, 3.0f, TCOD_NOISE_SIMPLEX);
 		int lightx = (int)(titlex + torchposx*30 +titleCoef * 20);
-		int lighty = (int)(titley + titleh/2 + torchposy*30); 
+		int lighty = (int)(titley + titleh/2 + torchposy*30);
 		lightCoef = (titleCoef+fireCoef)*0.25f + 0.15f*lightCoef;
 		for (int x=0; x < CON_W*2; x++) {
 			for (int y=0; y < CON_H*2; y++) {
@@ -178,7 +179,7 @@ void MainMenu::render() {
 				lightDir[0]*=l;
 				lightDir[1]*=l;
 				lightDir[2]*=l;
-				
+
 				rockColor = rockColor * (TCODColor(10,10,50) * fireCoef)
 					+ rockColor * TCODColor(184,148,86) * ((lightDir[0]*rockN.r+lightDir[1]*rockN.g+lightDir[2]*rockN.b)*lightCoef/255);
 				smokeCol = smokeCol + rockColor;
@@ -190,13 +191,13 @@ void MainMenu::render() {
 		TCODConsole::root->setDefaultBackground(TCODColor::black);
 		TCODConsole::root->clear();
 	}
-	
+
 
 	// menu
 	if ( elapsed > 2.0f) {
 		float elcoef=1.0f;
 		if ( elapsed < 10.0f) elcoef=(elapsed-2.0f)/ 8.0f;
-		
+
 		darken(MENUX-5,MENUY+selectedItem*2,MENUW*2,1,1.0f-elcoef*0.5f);
 		TCODConsole::root->setDefaultForeground(TEXT_COLOR*elcoef);
 		int itemNum=0;
@@ -209,7 +210,7 @@ void MainMenu::render() {
 			TCODConsole::root->print(MENUX,MENUY+2*itemNum, menuNames[*it] );
 		}
 	}
-	
+
 	// credits
 	static struct Credit {
 		const char *title;
@@ -229,7 +230,7 @@ void MainMenu::render() {
 	}
 
 	TCODConsole::root->setDefaultForeground(TEXT_COLOR);
-	TCODConsole::root->printEx(CON_W-2,CON_H-2,TCOD_BKGND_NONE,TCOD_RIGHT,"v"VERSION);
+	TCODConsole::root->printEx(CON_W-2,CON_H-2,TCOD_BKGND_NONE,TCOD_RIGHT,"v" VERSION);
 
 	if (userPref.nbLaunches == 1) {
 		TCODConsole::root->printEx(CON_W/2,CON_H-2,TCOD_BKGND_NONE,TCOD_CENTER,
@@ -239,7 +240,7 @@ void MainMenu::render() {
 		TCODConsole::root->printEx(CON_W/2,CON_H-2,TCOD_BKGND_NONE,TCOD_CENTER,
 			"Game scan finished. FATAL ERROR : no gameplay found.\nFall back to gameplay-less mode...");
 	}
-		
+
 	sound.endFrame();
 }
 
@@ -248,7 +249,7 @@ bool MainMenu::update(float el, TCOD_key_t k,TCOD_mouse_t mouse) {
 	// update fmod
 	elapsed+=el;
 	fire->update(el);
-	sound.update(); 
+	sound.update();
 	if( fade == FADE_DOWN ) {
 		MenuItemId id=menu.get(selectedItem);
 		if (fadeLvl <= 0.0f) {
@@ -305,12 +306,12 @@ bool MainMenu::update(float el, TCOD_key_t k,TCOD_mouse_t mouse) {
 		bool up=false,down=false,left=false,right=false;
 		k.pressed=true;
 		Player::getMoveKey(k,&up,&down,&left,&right);
-		if ( down || right ) 
+		if ( down || right )
 			selectedItem = (selectedItem+1)%menu.size();
-		else if ( up || left ) 
+		else if ( up || left )
 			selectedItem= (menu.size()+selectedItem-1)%menu.size();
 	}
-	if ( ((mouse.lbutton_pressed && (mouse.cy == MENUY || mouse.cy == MENUY+2 || mouse.cy == MENUY+4) && mouse.cx >= MENUX-5 && mouse.cx <= MENUX-5+MENUW) 
+	if ( ((mouse.lbutton_pressed && (mouse.cy == MENUY || mouse.cy == MENUY+2 || mouse.cy == MENUY+4) && mouse.cx >= MENUX-5 && mouse.cx <= MENUX-5+MENUW)
 		|| k.vk == TCODK_ENTER || k.vk == TCODK_KPENTER ) && selectedItem != -1 ) {
         fade=FADE_DOWN;
 	}
@@ -318,10 +319,10 @@ bool MainMenu::update(float el, TCOD_key_t k,TCOD_mouse_t mouse) {
 }
 
 void MainMenu::waitForWorldGen() {
-	//TCODSystem::lockSemaphore(worldDone);            
+	//TCODSystem::lockSemaphore(worldDone);
 	//threadPool->waitUntilFinished(worldGenJobId);
 }
 void MainMenu::waitForForestGen() {
-	//TCODSystem::lockSemaphore(worldDone);            
+	//TCODSystem::lockSemaphore(worldDone);
 	//threadPool->waitUntilFinished(forestGenJobId);
 }

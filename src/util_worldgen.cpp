@@ -27,21 +27,23 @@
 // world generator
 // this was mostly generated with libtcod 1.4.2 heightmap tool !
 
+#include "util_worldgen.hpp"
+
 #include <math.h>
 #include <stdio.h>
 #include "main.hpp"
 
 // temperature / precipitation Biome diagram (Whittaker diagram)
 EBiome biomeDiagram[5][5] = {
-    // artic/alpine climate (below -5°C)
+    // artic/alpine climate (below -5ï¿½C)
     { TUNDRA, TUNDRA, TUNDRA, TUNDRA, TUNDRA, },
-    // cold climate (-5 / 5 °C)
+    // cold climate (-5 / 5 ï¿½C)
     { COLD_DESERT, GRASSLAND, BOREAL_FOREST, BOREAL_FOREST, BOREAL_FOREST, },
-    // temperate climate (5 / 15 °C)
+    // temperate climate (5 / 15 ï¿½C)
     { COLD_DESERT, GRASSLAND, TEMPERATE_FOREST, TEMPERATE_FOREST, TROPICAL_MONTANE_FOREST, },
-    // warm climate (15 - 20°C)
+    // warm climate (15 - 20ï¿½C)
     { HOT_DESERT, SAVANNA, TROPICAL_DRY_FOREST, TROPICAL_EVERGREEN_FOREST, TROPICAL_EVERGREEN_FOREST, },
-    // tropical climate (above 20 °C)
+    // tropical climate (above 20 ï¿½C)
     { HOT_DESERT, THORN_FOREST, TROPICAL_DRY_FOREST, TROPICAL_EVERGREEN_FOREST, TROPICAL_EVERGREEN_FOREST, },
 };
 
@@ -103,7 +105,7 @@ static const int precIndexes[MAX_PREC_KEY] = {
 	4,8,12,16,20,24,28,32,36,40,50,60,70,80,100,120,140,160,255
 	};
 static const float precipitations[MAX_PREC_KEY] = {
-	0,1,2,3,4,5,6,7,8,9,10,13,15,18,20,25,30,35,40  // cm / m² / year
+	0,1,2,3,4,5,6,7,8,9,10,13,15,18,20,25,30,35,40  // cm / mï¿½ / year
 };
 static const TCODColor precColors[MAX_PREC_KEY]= {
 	TCODColor(128,0,0), // < 4
@@ -132,13 +134,13 @@ static const int MAX_TEMP_KEY=7;
 static const int tempIndexes[MAX_TEMP_KEY] = {0,42,84,126,168,210,255};
 static const int temperatures[MAX_TEMP_KEY] = {-30,-20,-10,0,10,20,30};
 static const TCODColor tempKeyColor[MAX_TEMP_KEY]= {
-	TCODColor(180,8,130), // -30 °C
-	TCODColor(32,1,139), // -20 °C
-	TCODColor(0,65,252),// -10 °C
-	TCODColor(37,255,236),// 0 °C
-	TCODColor(255,255,1), // 10 °C
-	TCODColor(255,29,4), // 20 °C
-	TCODColor(80,3,0), // 30 °C
+	TCODColor(180,8,130), // -30 ï¿½C
+	TCODColor(32,1,139), // -20 ï¿½C
+	TCODColor(0,65,252),// -10 ï¿½C
+	TCODColor(37,255,236),// 0 ï¿½C
+	TCODColor(255,255,1), // 10 ï¿½C
+	TCODColor(255,29,4), // 20 ï¿½C
+	TCODColor(80,3,0), // 30 ï¿½C
 };
 
 
@@ -213,9 +215,9 @@ void WorldGenerator::addHill(int nbHill, float baseRadius, float radiusVar, floa
 
 void WorldGenerator::setLandMass(float landMass, float waterLevel) {
 	// fix land mass. We want a proportion of landMass above sea level
-#ifndef NDEBUG	
+#ifndef NDEBUG
 	float t0=TCODSystem::getElapsedSeconds();
-#endif	
+#endif
 	int heightcount[256];
 	memset(heightcount,0,sizeof(heightcount));
 	for ( int x=0; x < HM_WIDTH; x++) {
@@ -246,7 +248,7 @@ void WorldGenerator::setLandMass(float landMass, float waterLevel) {
 			hm->setValue(x,y,h);
 		}
 	}
-#ifndef NDEBUG	
+#ifndef NDEBUG
 	float t1=TCODSystem::getElapsedSeconds();
 	DBG(("  Landmass... %g\n", t1-t0 ));
 #endif
@@ -297,7 +299,7 @@ void WorldGenerator::buildBaseMap() {
         f[0] = 6.0f*((float)(x) / HM_WIDTH);
 	    for (int y=0; y < HM_HEIGHT; y++) {
             f[1] = 6.0f*((float)(y) / HM_HEIGHT);
-            clouds[x][y] = 0.5f * (1.0f + 0.8f * noise->getFbmSimplex(f,4.0f));
+            clouds[x][y] = 0.5f * (1.0f + 0.8f * noise->getFbm(f, 4.0f, TCOD_NOISE_SIMPLEX));
 	    }
 	}
 	t1=TCODSystem::getElapsedSeconds();
@@ -313,13 +315,13 @@ void WorldGenerator::smoothMap() {
 	static const int smoothKernelDy[9]={-1,-1,-1,0,0,0,1,1,1};
 	static const float smoothKernelWeight[9]={2,8,2,8,20,8,2,8,2};
 
-#ifndef NDEBUG	
+#ifndef NDEBUG
 	float t0=TCODSystem::getElapsedSeconds();
 #endif
 	hm->kernelTransform(smoothKernelSize,smoothKernelDx,smoothKernelDy,smoothKernelWeight,-1000,1000);
 	hm2->kernelTransform(smoothKernelSize,smoothKernelDx,smoothKernelDy,smoothKernelWeight,-1000,1000);
 	hm->normalize();
-#ifndef NDEBUG	
+#ifndef NDEBUG
 	float t1=TCODSystem::getElapsedSeconds();
 	DBG(("  Blur... %g\n", t1-t0 ));
 #endif
@@ -375,7 +377,7 @@ void WorldGenerator::erodeMap() {
                 float sediment=0.0f;
                 bool end=false;
                 int ix=x,iy=y;
-                uint8 oldFlow=md->flowDir;
+                uint8_t oldFlow=md->flowDir;
                 map_data_t *md2=md;
                 while ( !end ) {
                     float h = hm->getValue(ix,iy);
@@ -543,7 +545,7 @@ void WorldGenerator::updateClouds(float elapsedTime) {
             for (int y=0; y < HM_HEIGHT; y++) {
                 f[0] = 6.0f*((float)(x+cdx) / HM_WIDTH);
                 f[1] = 6.0f*((float)(y) / HM_HEIGHT);
-                clouds[x][y] = 0.5f * (1.0f + 0.8f * noise->getFbmSimplex(f,4.0f));
+                clouds[x][y] = 0.5f * (1.0f + 0.8f * noise->getFbm(f, 4.0f, TCOD_NOISE_SIMPLEX));
             }
         }
     }
@@ -814,7 +816,7 @@ void WorldGenerator::computePrecipitations() {
     for (int diry=-1; diry <= 1; diry += 2 ) {
         for (int x=0; x < HM_WIDTH; x++) {
             float noisex = (float)(x)*5/HM_WIDTH;
-            float waterAmount=(1.0f+noise1d.getFbmSimplex(&noisex,3.0f));
+            float waterAmount=(1.0f+noise1d.getFbm(&noisex, 3.0f, TCOD_NOISE_SIMPLEX));
             int starty = (diry == -1 ? HM_HEIGHT-1 : 0);
             int endy = (diry == -1 ? -1 : HM_HEIGHT);
             for (int y=starty; y != endy; y += diry) {
@@ -843,7 +845,7 @@ void WorldGenerator::computePrecipitations() {
     for (int dirx=-1; dirx <= 1; dirx += 2 ) {
         for (int y=0; y < HM_HEIGHT; y++) {
             float noisey = (float)(y)*5/HM_HEIGHT;
-            float waterAmount=(1.0f+noise1d.getFbmSimplex(&noisey,3.0f));
+            float waterAmount=(1.0f+noise1d.getFbm(&noisey, 3.0f, TCOD_NOISE_SIMPLEX));
             int startx = (dirx == -1 ? HM_WIDTH-1 : 0);
             int endx = (dirx == -1 ? -1 : HM_WIDTH);
             for (int x=startx; x != endx; x += dirx) {
@@ -878,7 +880,7 @@ void WorldGenerator::computePrecipitations() {
         float coef = sinf(2*3.1415926*lat );
         for (int x=0; x < HM_WIDTH; x++) {
             float f[2] = { (float)(x)/HM_WIDTH, (float)(y)/HM_HEIGHT };
-            float xcoef = coef + 0.5f*noise2d.getFbmSimplex(f,3.0f);
+            float xcoef = coef + 0.5f*noise2d.getFbm(f, 3.0f, TCOD_NOISE_SIMPLEX);
             float precip = precipitation->getValue(x,y);
             precip +=  (max-min) * xcoef * 0.1f;
             precipitation->setValue(x,y,precip);
@@ -972,8 +974,8 @@ void WorldGenerator::smoothPrecipitations() {
 }
 
 void WorldGenerator::computeTemperaturesAndBiomes() {
-	// temperature shift with altitude : -25°C at 6000 m
-	// mean temp at sea level : 25°C at lat 0  5°C at lat 45 -25°C at lat 90 (sinusoide)
+	// temperature shift with altitude : -25ï¿½C at 6000 m
+	// mean temp at sea level : 25ï¿½C at lat 0  5ï¿½C at lat 45 -25ï¿½C at lat 90 (sinusoide)
 	float sandCoef=1.0f/(1.0f-sandHeight);
 	float waterCoef=1.0f/sandHeight;
 	for (int y=0; y < HM_HEIGHT; y++) {

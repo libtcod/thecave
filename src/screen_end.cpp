@@ -23,9 +23,9 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-#include "SDL/SDL.h"
+#include <SDL.h>
+#include <libtcod/libtcod_int.h> // to get fullscreen margins. There should be an API for that...
 #include "main.hpp"
-#include "libtcod_int.h" // to get fullscreen margins. There should be an API for that...
 
 EndScreen::EndScreen(const char *txt,float fadeLvl, bool stats)
 	: Screen(fadeLvl),txt(strdup(txt)),noiseZ(0.0f),stats(stats) {
@@ -48,7 +48,7 @@ void EndScreen::render() {
 	for (int x=0; x < CON_W*2; x++) {
 		for (int y=0; y < CON_H*2; y++) {
 			float f[3]= { (float)(x)/CON_W,(float)(y)/(2*CON_H)+2*noiseZ,noiseZ};
-			float v=0.5f*(1.0f+noise.getFbmSimplex(f,5.0f)) * y/(CON_H*2);
+			float v=0.5f*(1.0f+noise.getFbm(f, 5.0f, TCOD_NOISE_SIMPLEX)) * y/(CON_H*2);
 			img->putPixel(x,y,TCODColor::red*v);
 		}
 	}
@@ -145,8 +145,8 @@ void EndScreen::renderText(int x,int y, int w, const char *txt) {
 				ascii = 233+28+27;
 				ascii2 = ascii+28;
 			}
-			TCODConsole::root->putChar(curx,y,ascii); 
-			if ( ascii2 ) TCODConsole::root->putChar(curx,y+1,ascii2); 
+			TCODConsole::root->putChar(curx,y,ascii);
+			if ( ascii2 ) TCODConsole::root->putChar(curx,y+1,ascii2);
 			curx++;
 			if ( curx >= CON_W || curx >= x+w ) {
 				while (*txt != ' ') {
@@ -163,50 +163,7 @@ void EndScreen::renderText(int x,int y, int w, const char *txt) {
 }
 
 
-// ok. things are getting nasty here.
-// I'm using the SDL callback to display a picture with a higher resolution than subcell
-// this is cheating but even subcell was too big
-void *TCOD_sys_get_surface(int width, int height, bool alpha) {
-	Uint32 rmask,gmask,bmask,amask;
-	SDL_Surface *bitmap;
-	int flags=SDL_SWSURFACE;
-
-	if ( alpha ) {
-		if ( SDL_BYTEORDER == SDL_LIL_ENDIAN ) {
-			rmask=0x000000FF;
-			gmask=0x0000FF00;
-			bmask=0x00FF0000;
-			amask=0xFF000000;
-		} else {
-			rmask=0xFF000000;
-			gmask=0x00FF0000;
-			bmask=0x0000FF00;
-			amask=0x000000FF;
-		}
-		flags|=SDL_SRCALPHA;
-	} else {
-		if ( SDL_BYTEORDER == SDL_LIL_ENDIAN ) {
-			rmask=0x0000FF;
-			gmask=0x00FF00;
-			bmask=0xFF0000;
-		} else {
-			rmask=0xFF0000;
-			gmask=0x00FF00;
-			bmask=0x0000FF;
-		}
-		amask=0;
-	}
-	bitmap=SDL_AllocSurface(flags,width,height,
-		alpha ? 32:24,
-		rmask,gmask,bmask,amask);
-	if ( alpha ) {
-		SDL_SetAlpha(bitmap, SDL_SRCALPHA, 255);
-	}
-	return (void *)bitmap;
-}
-
-
-PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char *textgen, int chapter) 
+PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char *textgen, int chapter)
 	: EndScreen("",0.0f,false),chapter(chapter) {
 	title=NULL;
 	TCODRandom tmpRng(saveGame.seed);
@@ -227,7 +184,7 @@ void PaperScreen::onFontChange() {
 	EndScreen::onFontChange();
 	int pixw,pixh;
 	tcodpix->getSize(&pixw,&pixh);
-	SDL_Surface *surf = (SDL_Surface *)TCOD_sys_get_surface(pixw, pixh, false);
+	SDL_Surface *surf = SDL_CreateRGBSurfaceWithFormat(0, pixw, pixh, 24, SDL_PIXELFORMAT_RGB24);
 
 	int charw,charh;
 	float ratio=(float)(pixh)/pixw;
@@ -244,11 +201,12 @@ void PaperScreen::onFontChange() {
 			p[bidx]=col.b;
 		}
 	}
-	SDL_Surface *surf2 = (SDL_Surface *)TCOD_sys_get_surface(CON_W*charw/2, (int)(CON_W*charw/2*ratio), false);
-	SDL_SoftStretch(surf, NULL,surf2, NULL);
+	SDL_Surface *surf2 = SDL_CreateRGBSurfaceWithFormat(
+		0, CON_W*charw/2, (int)(CON_W*charw/2*ratio), 24, SDL_PIXELFORMAT_RGB24);
+	SDL_BlitScaled(surf, NULL, surf2, NULL);
 	SDL_FreeSurface(surf);
-	if ( pix ) SDL_FreeSurface((SDL_Surface *)pix);
-	pix=(void *)surf2;		
+	if ( pix ) SDL_FreeSurface(pix);
+	pix=surf2;
 }
 
 
@@ -276,14 +234,12 @@ void PaperScreen::render(void *sdlSurface) {
 	int charw,charh;
 	TCODSystem::getCharSize(&charw, &charh);
 	int offx=0,offy=0;
-	
+
 	if ( TCODConsole::isFullscreen()) TCODSystem::getFullscreenOffsets(&offx,&offy);
 	SDL_Rect dst = {offx + CON_W*charw/4-18,
-		offy + charh*CON_H/2-charh/2,0,0}; 
-	if ( TCODConsole::getFade() != 255 ) {
-		SDL_SetAlpha((SDL_Surface *)pix,SDL_SRCALPHA,TCODConsole::getFade());
-	}
-	SDL_BlitSurface((SDL_Surface *)pix, NULL, (SDL_Surface *)sdlSurface, &dst);
+		offy + charh*CON_H/2-charh/2,0,0};
+	SDL_SetSurfaceAlphaMod(pix, TCODConsole::getFade());
+	SDL_BlitSurface(pix, NULL, (SDL_Surface*)sdlSurface, &dst);
 }
 
 bool PaperScreen::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {

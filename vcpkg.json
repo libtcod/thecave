@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "thecave",
+  "version": "0.0.0",
+  "dependencies": [
+    "libtcod",
+    "sdl2",
+    {
+      "name": "sdl2-mixer",
+      "features": ["dynamic-load", "libvorbis"]
+    }
+  ]
+}

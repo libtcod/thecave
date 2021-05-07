@@ -65,7 +65,7 @@ bool ConditionType::check(Creature *cr) {
 	}
 }
 
-Condition::Condition(ConditionTypeId type, float duration, float amount, const char *alias) 
+Condition::Condition(ConditionTypeId type, float duration, float amount, const char *alias)
 		: initialDuration(duration), duration(duration), amount(amount),curAmount(0.0f), alias(alias) {
 	this->type = ConditionType::get(type);
 }
@@ -82,7 +82,7 @@ bool Condition::update(float elapsed) {
 				//GameScreen::getInstance()->addBloodStain(target->x,target->y,lostHp);
 			}
 			curAmount = 0;
-			
+
 		}
 		break;
 		case HEAL : {
@@ -169,7 +169,7 @@ bool Creature::hasCondition(ConditionTypeId type, const char *alias) {
 
 Condition *Creature::getCondition(ConditionTypeId type, const char *alias) {
 	for ( Condition **it=conditions.begin(); it != conditions.end(); it ++) {
-		if ( (*it)->type->type == type 
+		if ( (*it)->type->type == type
 			&& (!alias || ((*it)->alias && strcmp((*it)->alias,alias) == 0 ) ) ) return *it;
 	}
 	return NULL;
@@ -189,8 +189,8 @@ Creature *Creature::getCreature(CreatureTypeId id) {
 			 ret->flags=CREATURE_SAVE;
 			 ret->currentBehavior = new HerdBehavior(new AvoidWaterWalkPattern());
 		break;
-		case CREATURE_FRIEND : 
-			ret = new Friend(); 
+		case CREATURE_FRIEND :
+			ret = new Friend();
 		break;
 		default:break;
 	}
@@ -291,7 +291,7 @@ void Creature::render(LightMap *lightMap) {
 		c=corpseColor*lightColor;
 	} else if (burn ) {
 		float fireX = TCODSystem::getElapsedSeconds() * fireSpeed + noiseOffset;
-		int fireIdx = (int)((0.5f+0.5f*noise1d.getSimplex(&fireX))*64.0f);
+		int fireIdx = (int)((0.5f+0.5f*noise1d.get(&fireX, TCOD_NOISE_SIMPLEX))*64.0f);
 		c=fire[fireIdx];
 		int r=(int)(c.r*1.5f*lightColor.r/255);
 		int g=(int)(c.g*1.5f*lightColor.g/255);

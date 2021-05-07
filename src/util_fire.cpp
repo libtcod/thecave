@@ -23,6 +23,7 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include "util_fire.hpp"
 
 #include <stdlib.h>
 #include <string.h>
@@ -53,10 +54,10 @@ Fire::Fire(int w, int h) :w(w),h(h),el(0.0f) {
 		col_init=true;
 	}
 	img = new TCODImage(w,h);
-	buf = new uint8[(w+2)*h];
-	smoothedBuf = new uint8[(w+2)*h];
-	memset(buf,0,sizeof(uint8)*(w+2)*h);
-	memset(smoothedBuf,0,sizeof(uint8)*(w+2)*h);
+	buf = new uint8_t[(w+2)*h];
+	smoothedBuf = new uint8_t[(w+2)*h];
+	memset(buf,0,sizeof(uint8_t)*(w+2)*h);
+	memset(smoothedBuf,0,sizeof(uint8_t)*(w+2)*h);
 }
 
 void Fire::generateImage() {
@@ -78,7 +79,7 @@ void Fire::antispark(int x, int y) {
 void Fire::softspark(int x, int y, int delta) {
 	int v = (int)(FIRE_GET(x,y))+delta;
 	v = CLAMP(0,255,v);
-	FIRE_SET(x,y,(uint8)v);
+	FIRE_SET(x,y,(uint8_t)v);
 }
 
 void Fire::update(float elapsed) {
@@ -106,21 +107,21 @@ void Fire::update(float elapsed) {
 			v -= 4;
 			if ( y < 10 ) v -= 4;
 			if ( v < 0) v=0;
-			FIRE_SET(x2,y-1,(uint8)v);
+			FIRE_SET(x2,y-1,(uint8_t)v);
 		}
 	}
-	
+
 	for (int y=0; y < h-1; y++) {
 		for (int x=1; x <= w; x++) {
-			int v = (int)(FIRE_GET(x,y)) 
-				+ (int)(FIRE_GET(x,y+1)) 
+			int v = (int)(FIRE_GET(x,y))
+				+ (int)(FIRE_GET(x,y+1))
 				+ (int)(FIRE_GET(x+1,y+1))
 				+ (int)(FIRE_GET(x+1,y));
 			v /= 4 ;
-			FIRE_SET2(x,y,(uint8)v);
+			FIRE_SET2(x,y,(uint8_t)v);
 		}
 	}
-	
+
 }
 
 Fire::~Fire() {

@@ -86,7 +86,7 @@ bool GameEngine::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {
 				TCODConsole::setFade(255,flashColor);
 			}
 		}
-	}	
+	}
 	if ( pauseOn && pauseCoef != 1.0f ) {
 		pauseCoef += elapsed;
 		if ( pauseCoef > 1.0f ) pauseCoef=1.0f;
@@ -104,14 +104,14 @@ void GameEngine::init() {
 	player.init();
 }
 
-void GameEngine::pauseGame() { 
+void GameEngine::pauseGame() {
 	pauseOn=true;
-	pauseCoef=0.0f; 
+	pauseCoef=0.0f;
 }
 
-void GameEngine::resumeGame() { 
-	pauseOn=false; 
-	pauseScreen=NULL; 
+void GameEngine::resumeGame() {
+	pauseOn=false;
+	pauseScreen=NULL;
 }
 
 

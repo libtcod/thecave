@@ -23,6 +23,11 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#pragma once
+
+#include <cstdint>
+
+#include <libtcod.h>
 
 extern TCODColor fireColor[ 256 ];
 
@@ -38,8 +43,8 @@ public :
 	TCODImage *img;
 protected :
 	int w, h;
-	uint8 *buf;
-	uint8 *smoothedBuf;
+	uint8_t *buf;
+	uint8_t *smoothedBuf;
 	float el;
 };
 

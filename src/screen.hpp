@@ -23,6 +23,11 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#pragma once
+
+#include "libtcod.hpp"
+
+#include "umbra/module.hpp"
 
 #define SCREEN_NONE -1
 extern int SCREEN_MAIN_MENU;

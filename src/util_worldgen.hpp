@@ -23,6 +23,11 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#pragma once
+
+#include <cstdint>
+
+#include <libtcod.h>
 
 // size of the heightmap
 #define HM_WIDTH 400
@@ -58,7 +63,7 @@ public :
 	TCODHeightMap *hm2;
 	// complete world map (not shaded)
 	TCODImage *worldmap;
-	// temperature map (in °C)
+	// temperature map (in ï¿½C)
 	TCODHeightMap *temperature;
 	// precipitation map (0.0 - 1.0)
 	TCODHeightMap *precipitation;
@@ -82,11 +87,11 @@ public :
 	// update
 	void updateClouds(float elapsedTime);
 	void computeSunLight(float lightDir[3]);
-	
+
 	// data
 	float getRealAltitude(float x, float y) const; // altitude in meters
-	float getPrecipitations(float x, float y) const; // in centimeter/m²/year
-	float getTemperature(float x, float y) const; // in °C
+	float getPrecipitations(float x, float y) const; // in centimeter/mï¿½/year
+	float getTemperature(float x, float y) const; // in ï¿½C
 	EBiome getBiome(float x, float y) const;
 
 	// map generators
@@ -106,13 +111,13 @@ protected :
 	typedef struct {
 		float slope;
 		// number of cells flowing into this cell
-		uint32 area;
+		uint32_t area;
 		// direction of lowest neighbour
-		uint8 flowDir;
+		uint8_t flowDir;
 		// inverse flow direction
-		uint8 upDir;
-		uint8 inFlags; // incoming flows
-		uint8 riverId;
+		uint8_t upDir;
+		uint8_t inFlags; // incoming flows
+		uint8_t riverId;
 		int riverLength;
 	} map_data_t;
 	map_data_t * mapData;

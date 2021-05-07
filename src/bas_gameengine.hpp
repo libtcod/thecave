@@ -23,6 +23,7 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include "screen.hpp"
 
 class Dialog;
 
@@ -35,12 +36,12 @@ public :
 	void init();
 
     Logger log;
-    
+
 	TCODConsole *pauseScreen;
 	inline bool isGamePaused() { return pauseOn; }
 	void pauseGame();
 	void resumeGame();
-	void onFontChange(); 
+	void onFontChange();
 	bool update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse);
 
 	Player player;
@@ -57,11 +58,11 @@ public :
 
 	// fireballs
 	void addFireball(FireBall *fb) { fireballs.push(fb); }
-	
+
 	// inventory
 	void openCloseInventory();
 	void openCloseLoot(Item *toLoot);
-	
+
 	// stats
 	struct {
 		int nbCreatureKilled;

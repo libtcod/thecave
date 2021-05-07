@@ -26,7 +26,7 @@
 #include <math.h>
 #include "main.hpp"
 
-// returns a value between 0.5 and 1.2 
+// returns a value between 0.5 and 1.2
 // 50% chances between 0.5 and 1.0 (clouds), 50% chances between 1.0 and 1.2 (clear sky)
 static inline float noiseFunc(float *f) {
 	/*
@@ -34,7 +34,7 @@ static inline float noiseFunc(float *f) {
 	ret = 1.2f - 0.3f * ret; // 0.8 - 1.2
 	if ( ret < 1.0f ) ret *= 0.75f + 2.5f * (ret-0.9f); // 0.5 - 1.0
 	*/
-	float ret=noise2d.getFbmSimplex(f,4.0f);
+	float ret=noise2d.getFbm(f, 4.0f, TCOD_NOISE_SIMPLEX);
 	if ( ret < 0.0f ) ret = 1.0f+ret*0.5f; // 0.5 - 1.0
 	else ret =1.0f+0.2f*ret; // 1.0 - 1.2
 	return ret;
@@ -60,7 +60,7 @@ CloudBox::CloudBox(int width, int height) : width(width),height(height),xOffset(
 			f2[1]=15.0f * sinf(angle);
             *val = noiseFunc(f);
             val++;
-			*hoval=0.3f*noise3d.getFbmSimplex(f2,8.0f);
+			*hoval=0.3f*noise3d.getFbm(f2, 8.0f, TCOD_NOISE_SIMPLEX);
 			hoval++;
 	    }
 	}
@@ -81,7 +81,7 @@ CloudBox::~CloudBox() {
 
 float CloudBox::getData(float *pdata,int x, int y) {
 	int realX = (x + x0)%width;
-	return pdata[realX+y*width]; 
+	return pdata[realX+y*width];
 }
 
 float CloudBox::getInterpolatedData(float *pdata,int x, int y) {
@@ -98,7 +98,7 @@ float CloudBox::getInterpolatedData(float *pdata,int x, int y) {
     return vx1;
 }
 
-float CloudBox::getThickness(int x, int y) { 
+float CloudBox::getThickness(int x, int y) {
 	return getData(data,x,y);
 }
 

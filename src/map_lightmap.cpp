@@ -56,7 +56,7 @@ float LightMap::getFog(int x, int y) {
 	static float coefy=fogScale/CON_H;
 
 	float f[3]={x*coefx,y*coefy,fogZ};
-	return fogMaxLevel*0.5f*(fogNoise->getFbmSimplex(f,fogOctaves)+1.0f);
+	return fogMaxLevel*0.5f*(fogNoise->getFbm(f, fogOctaves, TCOD_NOISE_SIMPLEX)+1.0f);
 }
 
 float LightMap::getPlayerFog(int x, int y) {

@@ -28,6 +28,11 @@
 #include "umbra.hpp"
 #include <stdio.h>
 #include <stdarg.h>
+#include <cstring>
+
+#ifdef _MSC_VER
+#define strncasecmp _strnicmp
+#endif
 
 TCOD_renderer_t UmbraEngine::renderer = TCOD_RENDERER_SDL;
 UmbraEngine * UmbraEngine::engineInstance = NULL;

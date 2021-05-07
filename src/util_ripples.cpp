@@ -24,6 +24,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <vector>
 #include <assert.h>
 #include <math.h>
 #include "main.hpp"
@@ -52,39 +53,40 @@ RippleManager::RippleManager(Dungeon *dungeon) : dungeon(dungeon) {
 }
 
 void RippleManager::init() {
-	bool visited[dungeon->size][dungeon->size];
-	memset(visited,0,sizeof(bool)*dungeon->size*dungeon->size);
+	std::vector<bool> visited(dungeon->size * dungeon->size, false);
+	auto visited_at = [&](int x, int y) { return visited[y * dungeon->size + x]; };
 	// first time : compute water zones
 	for (int dy=0; dy < dungeon->size; dy++) {
 		for (int dx=0; dx < dungeon->size; dx++) {
-			if (!visited[dx][dy]) {
+			if (!visited_at(dx, dy)) {
 				if ( dungeon->hasRipples(dx,dy) ) {
 					// new water zone. floodfill it
-					TCODList<int> cells;
-					cells.push(dx+dy*dungeon->size);
+					std::vector<int> cells;
+					cells.push_back(dx+dy*dungeon->size);
 					int minx=dx;
 					int miny=dy;
 					int maxx=dx;
 					int maxy=dy;
 					while ( cells.size() > 0 ) {
-						int off=cells.pop();
+						int off=cells.back();
+						cells.pop_back();
 						int x=off%dungeon->size;
 						int y=off/dungeon->size;
-						visited[x][y]=true;
-						if ( x > 0 && ! visited[x-1][y] && dungeon->hasRipples(x-1,y)) {
-							cells.push(off-1);
+						visited_at(x, y)=true;
+						if ( x > 0 && ! visited_at(x-1, y) && dungeon->hasRipples(x-1,y)) {
+							cells.push_back(off-1);
 							if ( minx > x-1 ) minx=x-1;
 						}
-						if ( x < dungeon->size-1 && ! visited[x+1][y] && dungeon->hasRipples(x+1,y)) {
-							cells.push(off+1);
+						if ( x < dungeon->size-1 && ! visited_at(x+1, y) && dungeon->hasRipples(x+1,y)) {
+							cells.push_back(off+1);
 							if ( maxx < x+1 ) maxx=x+1;
 						}
-						if ( y > 0 && ! visited[x][y-1] && dungeon->hasRipples(x,y-1)) {
-							cells.push(off-dungeon->size);
+						if ( y > 0 && ! visited_at(x, y-1) && dungeon->hasRipples(x,y-1)) {
+							cells.push_back(off-dungeon->size);
 							if ( miny > y-1 ) miny=y-1;
 						}
-						if ( y < dungeon->size-1 && ! visited[x][y+1] && dungeon->hasRipples(x,y+1)) {
-							cells.push(off+dungeon->size);
+						if ( y < dungeon->size-1 && ! visited_at(x, y+1) && dungeon->hasRipples(x,y+1)) {
+							cells.push_back(off+dungeon->size);
 							if ( maxy < y+1 ) maxy=y+1;
 						}
 					}
@@ -138,7 +140,7 @@ void RippleManager::init() {
 					}
 				}
 			} else {
-				visited[dx][dy]=true;
+				visited_at(dx, dy)=true;
 			}
 		}
 	}
@@ -319,7 +321,7 @@ void RippleManager::renderRipples(TCODImage *ground) {
 						float xOffset=(getData(**it,zx2-1,zy2)-getData(**it,zx2+1,zy2));
 						float yOffset=(getData(**it,zx2,zy2-1)-getData(**it,zx2,zy2+1));
 						float f[3]={zx2,zy2,elCoef};
-						xOffset+=noise3d.getSimplex(f)*0.3f;
+						xOffset+=noise3d.get(f, TCOD_NOISE_SIMPLEX)*0.3f;
 						if ( ABS(xOffset) < 250 && ABS(yOffset) < 250 ) {
 							TCODColor col=ground->getPixel(groundx+(int)(xOffset*2),groundy+(int)(yOffset*2));
 							col = col + TCODColor::white*xOffset*0.1f;

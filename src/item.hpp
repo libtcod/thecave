@@ -23,23 +23,31 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#pragma once
+
+#include <cstdint>
+
+#include "bas_entity.hpp"
+#include "map_lightmap.hpp"
+#include "map_light.hpp"
+#include "item_modifier.hpp"
 
 class Creature;
 
 // item class, mainly for weapons. higher classes have more modifiers
-enum ItemClass { 
-	ITEM_CLASS_STANDARD, 
-	ITEM_CLASS_GREEN, 
-	ITEM_CLASS_ORANGE, 
-	ITEM_CLASS_RED, 
-	ITEM_CLASS_SILVER, 
-	ITEM_CLASS_GOLD, 
-	NB_ITEM_CLASSES 
+enum ItemClass {
+	ITEM_CLASS_STANDARD,
+	ITEM_CLASS_GREEN,
+	ITEM_CLASS_ORANGE,
+	ITEM_CLASS_RED,
+	ITEM_CLASS_SILVER,
+	ITEM_CLASS_GOLD,
+	NB_ITEM_CLASSES
 };
 
 enum ItemTypeId {
 	// MISC
-	ITEM_OAK_TWIG, ITEM_PINE_TWIG, ITEM_CAMPFIRE, ITEM_SCROLL, 
+	ITEM_OAK_TWIG, ITEM_PINE_TWIG, ITEM_CAMPFIRE, ITEM_SCROLL,
 	// BUILDING
 	ITEM_DOOR, ITEM_WALL, ITEM_WINDOW,
 	// STATIC CONTAINERS
@@ -103,7 +111,7 @@ struct ItemCombination {
 	ItemIngredient ingredients[MAX_INGREDIENTS];
 };
 
-enum ItemFeatureId { 
+enum ItemFeatureId {
 	ITEM_FEAT_FIRE_EFFECT,  // fire has an effect on item (either transform or destroy)
 	ITEM_FEAT_PRODUCES,  // item produces other items when clicked
 	ITEM_FEAT_FOOD, // item can be eaten and restore health
@@ -117,11 +125,11 @@ enum ItemFeatureId {
 
 // context-menu actions in the inventory screen
 enum ItemActionId {
-	ITEM_ACTION_TAKE, 
-	ITEM_ACTION_USE, 
-	ITEM_ACTION_DROP, 
-	ITEM_ACTION_THROW, 
-	ITEM_ACTION_DISASSEMBLE, 
+	ITEM_ACTION_TAKE,
+	ITEM_ACTION_USE,
+	ITEM_ACTION_DROP,
+	ITEM_ACTION_THROW,
+	ITEM_ACTION_DISASSEMBLE,
 	NB_ITEM_ACTIONS};
 
 enum ItemActionFlag {
@@ -161,7 +169,7 @@ struct ItemAgeEffect {
 
 // cannot use TCODColor in a union because it has a constructor...
 struct ItemColor {
-	uint8 r,g,b;
+	uint8_t r,g,b;
 	ItemColor& operator=(const TCODColor&);
 };
 
@@ -172,11 +180,11 @@ struct ItemLight {
 	const char *pattern;
 };
 
-enum AttackWieldType { 
-	WIELD_NONE, 
-	WIELD_ONE_HAND, 
-	WIELD_MAIN_HAND, 
-	WIELD_OFF_HAND, 
+enum AttackWieldType {
+	WIELD_NONE,
+	WIELD_ONE_HAND,
+	WIELD_MAIN_HAND,
+	WIELD_OFF_HAND,
 	WIELD_TWO_HANDS };
 
 enum AttackFlags {
@@ -199,7 +207,7 @@ struct ItemHeat {
 };
 
 struct ItemContainer {
-	int size; 
+	int size;
 };
 
 struct ItemFeature {
@@ -219,7 +227,7 @@ struct ItemFeature {
 	static ItemFeature *getAgeEffect(float delay, ItemType *type);
 	static ItemFeature *getFood(int health);
 	static ItemFeature *getLight(float range, const TCODColor &color, float patternDelay, const char *pattern);
-	static ItemFeature *getAttack(AttackWieldType wield, float minCastDelay, float maxCastDelay, float minReloadDelay, 
+	static ItemFeature *getAttack(AttackWieldType wield, float minCastDelay, float maxCastDelay, float minReloadDelay,
 		float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef, int flags );
 	static ItemFeature *getHeat(float intensity, float radius);
 	static ItemFeature *getContainer(int size);
@@ -228,11 +236,11 @@ struct ItemFeature {
 
 
 enum InventoryTabId {
-	INV_ALL, 
-	INV_ARMOR, 
-	INV_WEAPON, 
-	INV_FOOD, 
-	INV_MISC, 
+	INV_ALL,
+	INV_ARMOR,
+	INV_WEAPON,
+	INV_FOOD,
+	INV_MISC,
 	NB_INV_TABS };
 
 // data shared by all item types
@@ -262,13 +270,13 @@ public :
 	static Item *getItem(const ItemType *type, float x, float y, bool createComponents=true);
 	static Item *getItem(ItemTypeId type, float x, float y, bool createComponents=true);
 	static Item *getRandomWeapon(ItemTypeId id,ItemClass itemClass);
-	
-	
+
+
 	static bool init();
 	static ItemType *getType(const char *name);
 	static ItemType *getType(ItemTypeId id);
 	static ItemType *getTypeFromTag(unsigned long long tag);
-	
+
 	virtual ~Item();
 	virtual void render(LightMap *lightMap);
 	virtual void renderDescription(int x, int y, bool below=true);
@@ -282,7 +290,7 @@ public :
 	virtual void use(int dx, int dy) {} // use the item in place (static items)
 	virtual Item *drop(); // move the item from it's owner inventory to the ground
 	bool isEquiped();
-	
+
 	// add to the list, posibly stacking
 	Item * addToList(TCODList<Item *> *list);
 	// remove one item, possibly unstacking
@@ -293,7 +301,7 @@ public :
 	bool isA(unsigned long long tag) const { return typeData->isA(tag); }
 	bool isA(ItemTypeId id) const { return typeData->id == id; }
 	bool isA(const ItemType *type) const { return typeData == type; }
-    
+
 	// flags checks
 	bool isWalkable() const { return (typeData->flags & ITEM_NOT_WALKABLE) == 0; }
 	bool isTransparent() const { return (typeData->flags & ITEM_NOT_TRANSPARENT) ==0; }
@@ -303,11 +311,11 @@ public :
 	bool isDeletedOnUse() const { return typeData->flags & ITEM_DELETE_ON_USE; }
 	bool isUsedWhenPicked() const { return typeData->flags & ITEM_USE_WHEN_PICKED; }
 	bool isActivatedOnBump() const { return typeData->flags & ITEM_ACTIVATE_ON_BUMP; }
-	
+
 	// containers
 	bool putInside(Item *it); // put it in this container (false if no more room)
 	bool pullOutside(Item *it); // remove it from this container (false if not inside)
-	
+
     // returns "A/An <item name>"
     const char *AName() const;
     // returns "a/an <item name>"
@@ -316,14 +324,14 @@ public :
     const char *TheName() const;
     // returns "the <item name>"
     const char *theName() const;
-    
+
     const char *getRateName(float rate) const;
-    
-	virtual bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
-	virtual void saveData(uint32 chunkId, TCODZip *zip);
-	
+
+	virtual bool loadData(uint32_t chunkId, uint32_t chunkVersion, TCODZip *zip);
+	virtual void saveData(uint32_t chunkId, TCODZip *zip);
+
 	static TCODColor classColor[NB_ITEM_CLASSES];
-	
+
 	//crafting
 	static ItemCombination combinations[];
 	static ItemCombination *getCombination(const Item *it1, const Item *it2);
@@ -331,7 +339,7 @@ public :
 	void addComponent(Item *component);
 	ItemCombination *getCombination() const;
 
-	
+
 	const ItemType *typeData;
 	ItemClass itemClass;
 	TCODColor col;
@@ -347,7 +355,7 @@ public :
 	bool toDelete;
 	int ch;
 	TCODList<Item *> stack; // for soft stackable items or containers
-	TCODList<Item *> components; // for items that can be disassembled 
+	TCODList<Item *> components; // for items that can be disassembled
 protected :
 	static void addFeature(ItemTypeId id, ItemFeature *feat);
 	static TCODList<ItemType *>types;

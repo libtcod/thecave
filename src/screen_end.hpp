@@ -23,6 +23,9 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include <SDL.h>
+
+#include "screen.hpp"
 
 class EndScreen : public Screen{
 public :
@@ -53,7 +56,7 @@ public :
 protected :
 	const char *title;
 	TCODImage *tcodpix;
-	void *pix;
+	SDL_Surface *pix;
 	int chapter;
 	void initialise();
 	void activate();

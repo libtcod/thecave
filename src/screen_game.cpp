@@ -138,7 +138,7 @@ void Game::render() {
 						float midr=(r-medRadius)*radiusdiv;
 						float rcoef=1.0f-ABS(midr);
 						float f[2]={(float)(3*x)/CON_W,(float)(3*y)/CON_H};
-						float ncoef = 0.5f*(1.0f+noise2d.getFbmSimplex(f,3.0f));
+						float ncoef = 0.5f*(1.0f+noise2d.getFbm(f, 3.0f, TCOD_NOISE_SIMPLEX));
 //						ground->putPixel(x,y,TCODColor::lerp(TCODColor::yellow,TCODColor::red,coef));
 						TCODColor col=lightMap->getColor2x(x,y);
 						col = TCODColor::lerp(col,TCODColor::lerp(TCODColor::darkRed,TCODColor::yellow,ncoef),rcoef*ncoef);

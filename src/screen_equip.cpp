@@ -23,7 +23,8 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
+#if 0
+#include "screen_equip.hpp"
 #include "main.hpp"
 
 #define NB_WEAPONS 5
@@ -74,5 +75,4 @@ bool EquipScreen::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {
 	return true;
 
 }
-
-
+#endif

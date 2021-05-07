@@ -23,6 +23,7 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include "bas_savegame.hpp"
 
 #include <stdio.h>
 #include "main.hpp"
@@ -33,7 +34,7 @@ bool SaveGame::isBigEndian() {
         char c[4];
     } test = {0x01020304};
 
-    return test.c[0] == 1; 
+    return test.c[0] == 1;
 }
 
 const char *SaveGame::getChunkId(uint32 chunkId) {
@@ -135,11 +136,11 @@ bool SaveGame::load(SavePhase phase) {
 			fflush(stdout);
 		if (! listener) {
 			zip->skipBytes(chunkSize);
-		}				
+		}
 	}
 	delete zip;
 	zip=NULL;
-	return true;		
+	return true;
 }
 
 void SaveGame::loadChunk(uint32 *chunkId, uint32 *chunkVersion) {
@@ -159,7 +160,7 @@ void SaveGame::saveChunk(uint32 chunkId, uint32 chunkVersion) {
 		DBG(("size : %d\n",sizes.peek()));
 	}
 	DBG(("save chunk %s current offset %d ",getChunkId(chunkId),zip->getCurrentBytes()));
-	
+
 	zip->putInt(chunkId);
 	zip->putInt(chunkVersion);
 	startPos.push(zip->getCurrentBytes());

@@ -94,7 +94,7 @@ int main (int argc, char *argv[]) {
 	engine.activateModule(SCREEN_MAIN_MENU);
 
 	sound.initialize();
-    if (engine.initialise(TCOD_RENDERER_SDL)) {
+    if (engine.initialise(TCOD_RENDERER_SDL2)) {
 		engine.run();
 		saveGame.save();
 		userPref.save();

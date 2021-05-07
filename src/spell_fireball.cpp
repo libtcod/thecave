@@ -283,7 +283,7 @@ bool FireBall::updateTorch(float elapsed) {
 	fxLife-= elapsed/incanLife;
 	if ( fxLife < 0.0f ) return false;
 	f=noiseOffset+fxLife*250.0f;
-	float var=0.2*(4.0f+noise1d.getSimplex(&f));
+	float var=0.2*(4.0f+noise1d.get(&f, TCOD_NOISE_SIMPLEX));
 	float curRange=incanRange*(2.0-fxLife)*var;
 	light.range=4*curRange;
 	for (Creature **cr=dungeon->creatures.begin(); cr != dungeon->creatures.end(); cr++) {
