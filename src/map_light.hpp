@@ -33,14 +33,14 @@ public :
 	Light(float range, TCODColor color=TCODColor::white, bool randomRad=false ) : randomRad(randomRad), range(range), color(color) {}
 	void addToLightMap(LightMap *map);
 	void getDungeonPart(int *minx,int *miny,int *maxx,int *maxy);
-	virtual void update(float elapsed) {}
+	virtual void update(float /* elapsed */) {}
 
 	bool randomRad;
 	float range;
 	TCODColor color;
 protected :
 	virtual float getIntensity() { return 1.0f; }
-	virtual TCODColor getColor(float rad) { return color; }
+	virtual TCODColor getColor(float /* rad */) { return color; }
 	float getFog(int x, int y);
 
 };

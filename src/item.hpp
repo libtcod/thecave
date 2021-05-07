@@ -145,7 +145,7 @@ struct ItemAction {
 	inline bool onLoot() {return (flags & ITEM_ACTION_LOOT) != 0;}
 };
 
-class ItemType;
+struct ItemType;
 
 struct ItemFireEffect {
 	float resistance; // in seconds
@@ -257,7 +257,7 @@ struct ItemType {
 	TCODList<ItemActionId> actions;
 	ItemFeature *getFeature(ItemFeatureId id) const;
 	bool isA(unsigned long long tag) const { return (tags & tag) != 0; }
-	bool hasAction(ItemActionId id) const { return actions.contains(id); }
+	bool hasAction(ItemActionId id_) const { return actions.contains(id_); }
 	bool hasComponents() const;
 	ItemCombination *getCombination() const;
 	void computeActions();
@@ -287,7 +287,7 @@ public :
 
 	virtual Item *pickup(Creature *owner, const char *verb="pick up"); // move the item from ground to owner's inventory
 	virtual void use(); // use the item (depends on the type)
-	virtual void use(int dx, int dy) {} // use the item in place (static items)
+	virtual void use(int /* dx */, int /* dy */) {} // use the item in place (static items)
 	virtual Item *drop(); // move the item from it's owner inventory to the ground
 	bool isEquiped();
 

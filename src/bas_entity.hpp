@@ -35,14 +35,17 @@ public :
 
 	float x,y;
 
-	Entity() : x(0),y(0) {}
-	Entity(int px,int py) : x(px),y(py) {}
-	Entity(float px,float py) : x(px),y(py) {}
+	Entity() : Entity{0, 0} {}
+	Entity(int px,int py) : x{static_cast<float>(px)}, y{static_cast<float>(py)} {}
+	Entity(float px,float py) : x{px}, y{py} {}
 	// get subcell coordinates
 	int getSubX() const { return (int)(x*2); }
 	int getSubY() const { return (int)(y*2); }
-	void setPos(int x, int y) { this->x=x; this->y=y; }
-	void setPos(float x, float y) { this->x=x; this->y=y; }
+	void setPos(int x_, int y_) {
+		this->x=static_cast<float>(x_);
+		this->y=static_cast<float>(y_);
+	}
+	void setPos(float x_, float y_) { this->x=x_; this->y=y_; }
 	Entity &addDir(Direction d) {
 		static int xdirs[11] = { 0, 0, 0, 0, 0, 1, -1, 1, -1, 1, -1};
 		static int ydirs[11] = { 0, 0, 0, -1, 1, 0, 0, -1, -1, 1, 1};

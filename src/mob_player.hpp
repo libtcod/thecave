@@ -37,12 +37,12 @@ public :
 	void termLevel();
 	void heal(int healPoints);
 	void render(LightMap *lightMap);
-	void setLightColor(TCODColor col) { light.color=col; }
+	void setLightColor(TCODColor color) { light.color=color; }
 	float getHealing();
 	float getHealth();
 	static void getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *right);
 	inline float getAverageSpeed() { return averageSpeed;}
-	void computeStealth(float elapsed);	
+	void computeStealth(float elapsed);
 
 	// SaveListener
 	bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
@@ -62,7 +62,7 @@ protected :
 	ExtendedLight healLight;
 	bool initDungeon;
 	bool isSprinting;
-	
+
 	void computeFovRange(float elapsed);
 	void computeAverageSpeed(float elapsed);
 	void updateSprintDelay(float elapsed, bool isSprinting);

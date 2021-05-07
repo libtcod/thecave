@@ -42,8 +42,8 @@ public :
 	virtual void render() = 0;
 	virtual bool update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) = 0;
 	virtual ~Screen() {}
-	void keyboard (TCOD_key_t &key) { this->key=key; }
-	void mouse (TCOD_mouse_t &ms) { this->ms=ms; }
+	void keyboard (TCOD_key_t &key_) { this->key=key_; }
+	void mouse (TCOD_mouse_t &ms_) { this->ms=ms_; }
 	bool update (void);
 
     void setFadeIn (int lengthInMilli, TCODColor col = TCODColor::black); //set fade lengths in milliseconds

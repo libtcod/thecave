@@ -16,6 +16,8 @@ file(GLOB_RECURSE SOURCE_FILES
 )
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
 # Enable warnings recommended for new projects.
 if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)

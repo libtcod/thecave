@@ -31,8 +31,8 @@ class UmbraPoint {
         bool mouseHover;
         bool mouseDown;
         UmbraPoint (): x(0),y(0),mouseHover(false) {}
-        UmbraPoint (int x, int y): x(x),y(y),mouseHover(false) {}
-        inline void set (int x, int y) { this->x=x; this->y=y; }
+        UmbraPoint (int x_, int y_): x(x_),y(y_),mouseHover(false) {}
+        inline void set (int x_, int y_) { this->x=x_; this->y=y_; }
         inline bool is (int px, int py) { return px == x && py == y; }
 };
 
@@ -42,10 +42,10 @@ class UmbraRect {
         bool mouseHover;
         bool mouseDown;
         UmbraRect (): x(0),y(0),w(0),h(0),mouseHover(false) {}
-        UmbraRect (int x, int y, int w, int h): x(x),y(y),w(w),h(h),mouseHover(false) {}
-        inline void setPos (int x, int y) { this->x=x; this->y=y; }
-        inline void setSize (int w, int h) { this->w=w;this->h=h; }
-        inline void set (int x, int y, int w, int h) { setPos(x,y); setSize(w,h); }
+        UmbraRect (int x_, int y_, int w_, int h_): x(x_),y(y_),w(w_),h(h_),mouseHover(false) {}
+        inline void setPos (int x_, int y_) { this->x=x_; this->y=y_; }
+        inline void setSize (int w_, int h_) { this->w=w_;this->h=h_; }
+        inline void set (int x_, int y_, int w_, int h_) { setPos(x_,y_); setSize(w_,h_); }
         inline bool isInside (int px, int py) { return px >= x && px < x+w && py >= y && py < y+h; }
         inline bool isInside (const UmbraPoint &p) { return p.x >= x && p.x < x+w && p.y >= y && p.y < y+h; }
 };
@@ -65,7 +65,7 @@ class UmbraWidget : public UmbraModule {
         int mousex,mousey;
         int dragx,dragy;
         bool canDrag, isDragging;
-        
-        virtual void endDragging(int mousex,int mousey) {}
+
+        virtual void endDragging(int /* mousex */, int /* mousey */) {}
 };
 

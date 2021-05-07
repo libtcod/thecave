@@ -40,8 +40,8 @@ class UmbraModule {
 
         virtual void render () { } //render the module on the root console
         virtual bool update () { return isActive(); } //update the module's logic
-        virtual void keyboard (TCOD_key_t &key) { } //module-specific keyboard
-        virtual void mouse (TCOD_mouse_t &ms) { } //module-specific mouse
+        virtual void keyboard (TCOD_key_t&) { } //module-specific keyboard
+        virtual void mouse (TCOD_mouse_t&) { } //module-specific mouse
         virtual void onFontChange() {} // called when the font is swapped
 
         //setters

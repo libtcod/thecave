@@ -35,8 +35,8 @@ enum EDialogFlag {
 class Dialog : public UmbraWidget {
 public :
 	Dialog() : flags(0),isMinimized(false),waitRelease(false) {}
-	void keyboard (TCOD_key_t &key) { this->key=key; UmbraWidget::keyboard(key); }
-	void mouse (TCOD_mouse_t &ms) { this->ms=ms; UmbraWidget::mouse(ms); }
+	void keyboard (TCOD_key_t &key_) { this->key=key_; UmbraWidget::keyboard(key_); }
+	void mouse (TCOD_mouse_t &ms_) { this->ms=ms_; UmbraWidget::mouse(ms_); }
 	bool update (void);
 	virtual bool update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) = 0;
 	void setMaximized();
@@ -48,7 +48,7 @@ public :
 	bool isModal() { return (flags & DIALOG_MODAL) != 0 ; }
 	void activate();
 	virtual void setPos(int x, int y) { rect.setPos(x,y); }
-	void deactivate();	
+	void deactivate();
 protected :
 	int flags;
 	TCOD_key_t key;
@@ -61,7 +61,7 @@ protected :
 
 	virtual void internalUpdate();
 	virtual void renderFrame(float alpha, const char *title);
-	void endDragging(int mousex,int mousey) {}
+	void endDragging(int /* mousex */, int /* mousey */) {}
 };
 
 class MultiPosDialog : public Dialog {
