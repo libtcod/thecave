@@ -29,5 +29,3 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-mixer CONFIG REQUIRED)
 find_package(libtcod CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2_mixer SDL2::SDL2main libtcod::libtcod)
-
-target_include_directories(${PROJECT_NAME} PRIVATE include)
