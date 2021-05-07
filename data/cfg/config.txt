@@ -55,14 +55,14 @@ config {
 		scale=5.0
 		octaves=3.0
 		speed=1.0
-		color=#000000
+		color_=#000000
 	}
 	creatures {
 		burnDamage=1.0			// hp per second
 		pathDelay=1.0			// seconds between path computation for a creature
 		player {
-			char='@'
-			color=#FFFFFF
+			ch='@'
+			fg=#FFFFFF
 			speed=8.0		// cells per second. x2 when sprinting
 			sprintLength=5.0 // in seconds
 			sprintRecovery=10.0 // in seconds
@@ -73,8 +73,8 @@ config {
 			healIntensityPattern="noise"
 			longButtonDelay=0.3
 			longSpellDelay=1.0
-			// keyboard movement config. Only letter/number keys allowed. 
-			// Arrows, numpad, vi-keys, WASD always work 
+			// keyboard movement config. Only letter/number keys allowed.
+			// Arrows, numpad, vi-keys, WASD always work
 			moveUpKey='Z'
 			moveDownKey='S'
 			moveLeftKey='Q'
@@ -82,7 +82,6 @@ config {
 			// quickslot shortcuts
 			// (should correspond to main keyboard 1-0 keys)
 			// qwerty layout
-			/*
 			quickslot1='1'
 			quickslot2='2'
 			quickslot3='3'
@@ -93,29 +92,17 @@ config {
 			quickslot8='8'
 			quickslot9='9'
 			quickslot10='0'
-			*/
-			// azerty layout
-			quickslot1='&'
-			quickslot2='é'
-			quickslot3='\"'
-			quickslot4='\''
-			quickslot5='('
-			quickslot6='-'
-			quickslot7='è'
-			quickslot8='_'
-			quickslot9='ç'
-			quickslot10='à'
 		}
 		minion {
-			char='m'
-			color=#BBFF55
+			ch='m'
+			fg=#BBFF55
 			life=10
 			speed=6.0		// cells per second
 			damage=2.0		// hp per second when at melee range
 		}
 		boss {
-			char='Z'
-			color=#FF8800
+			ch='Z'
+			fg=#FF8800
 			life=2500
 			speed=4.0		// cells per second
 			secureDist=16		// try to keep squared distance to player above this value
@@ -146,4 +133,4 @@ config {
 		itemKillCount=30		// item dropped every 30 creatures
 	}
 }
-  
+

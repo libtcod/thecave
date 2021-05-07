@@ -76,7 +76,7 @@ float LightMap::getPlayerFog(int x, int y) {
 // apply a light map to an image.
 void LightMap::applyToImage(TCODImage *image,
 	int minx2x,int miny2x,int maxx2x,int maxy2x) {
-	static TCODColor fogColor=Config::getColor("config.fog.color");
+	static TCODColor fogColor=Config::getColor("config.fog.color_");
 	static TCODColor memoryWallColor=Config::getColor("config.display.memoryWallColor");
 	static int memoryWallIntensity=(int)(memoryWallColor.r)+memoryWallColor.g+memoryWallColor.b;
 	static TCODColor wallColor=Config::getColor("config.display.wallColor");
