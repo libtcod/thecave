@@ -18,6 +18,11 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
+# Enforce UTF-8 encoding on MSVC.
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8)
+endif()
+
 # Enable warnings recommended for new projects.
 if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)
