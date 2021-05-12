@@ -12,7 +12,10 @@
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        // Workaround for missing `ogg.dll`, `vorbis.dll`, and `vorbisfile.dll` next to execuable.
+        {"name": "Path", "value": "${env:Path};${workspaceFolder}/build/vcpkg_installed/x64-windows/bin"}
+      ],
       "console": "internalConsole"
     }
   ]
