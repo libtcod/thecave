@@ -3,11 +3,15 @@
   "name": "thecave",
   "version": "0.0.0",
   "dependencies": [
-    "libtcod",
+    {
+      "name": "libtcod",
+      "features": ["threads"]
+    },
     "sdl2",
     {
       "name": "sdl2-mixer",
-      "features": ["dynamic-load", "libvorbis"]
+      "default-features": false,
+      "features": ["libvorbis"]
     }
   ]
 }
