@@ -34,8 +34,8 @@ static TCODColor healthColor(127,127,255);
 
 Player::Player() : healPoints(0),lbuttonDelay(0.0f),lWalkDelay(0.0f),rbuttonDelay(0.0f),lbutton(false),
 	rbutton(false),curHeal(0), initDungeon(true) {
-	static char playerChar=Config::getChar("config.creatures.player.ch");
-	static TCODColor playerColor=Config::getColor("config.creatures.player.fg");
+	static char playerChar=Config::getChar("config.creatures.player.char");
+	static TCODColor playerColor=Config::getColor("config.creatures.player.color");
 	static float playerSpeed=Config::getFloat("config.creatures.player.speed");
 	static float healthIntensityDelay=Config::getFloat("config.creatures.player.healIntensityDelay");
 	static const char * healthIntensityPattern=strdup(Config::getString("config.creatures.player.healIntensityPattern"));

@@ -61,7 +61,7 @@ void Config::init() {
 	fog->addProperty("scale",TCOD_TYPE_FLOAT,true);
 	fog->addProperty("octaves",TCOD_TYPE_FLOAT,true);
 	fog->addProperty("speed",TCOD_TYPE_FLOAT,true);
-	fog->addProperty("color_",TCOD_TYPE_COLOR,true);
+	fog->addProperty("color",TCOD_TYPE_COLOR,true);
 	config->addStructure(fog);
 
 	TCODParserStruct *spells=parser.newStructure("spells");
@@ -108,16 +108,16 @@ void Config::init() {
 	creatures->addProperty("pathDelay",TCOD_TYPE_FLOAT,true);
 
 		TCODParserStruct *minion=parser.newStructure("minion");
-		minion->addProperty("ch",TCOD_TYPE_CHAR,true);
-		minion->addProperty("fg",TCOD_TYPE_COLOR,true);
+		minion->addProperty("char",TCOD_TYPE_CHAR,true);
+		minion->addProperty("color",TCOD_TYPE_COLOR,true);
 		minion->addProperty("life",TCOD_TYPE_INT,true);
 		minion->addProperty("speed",TCOD_TYPE_FLOAT,true);
 		minion->addProperty("damage",TCOD_TYPE_FLOAT,true);
 		creatures->addStructure(minion);
 
 		TCODParserStruct *boss=parser.newStructure("boss");
-		boss->addProperty("ch",TCOD_TYPE_CHAR,true);
-		boss->addProperty("fg",TCOD_TYPE_COLOR,true);
+		boss->addProperty("char",TCOD_TYPE_CHAR,true);
+		boss->addProperty("color",TCOD_TYPE_COLOR,true);
 		boss->addProperty("life",TCOD_TYPE_INT,true);
 		boss->addProperty("speed",TCOD_TYPE_FLOAT,true);
 		boss->addProperty("secureDist",TCOD_TYPE_INT,true);
@@ -127,8 +127,8 @@ void Config::init() {
 		creatures->addStructure(boss);
 
 		TCODParserStruct *player=parser.newStructure("player");
-		player->addProperty("ch",TCOD_TYPE_CHAR,true);
-		player->addProperty("fg",TCOD_TYPE_COLOR,true);
+		player->addProperty("char",TCOD_TYPE_CHAR,true);
+		player->addProperty("color",TCOD_TYPE_COLOR,true);
 		player->addProperty("speed",TCOD_TYPE_FLOAT,true);
 		player->addProperty("sprintLength",TCOD_TYPE_FLOAT,true);
 		player->addProperty("sprintRecovery",TCOD_TYPE_FLOAT,true);

@@ -55,14 +55,14 @@ config {
 		scale=5.0
 		octaves=3.0
 		speed=1.0
-		color_=#000000
+		color=#000000
 	}
 	creatures {
 		burnDamage=1.0			// hp per second
 		pathDelay=1.0			// seconds between path computation for a creature
 		player {
-			ch='@'
-			fg=#FFFFFF
+			char='@'
+			color=#FFFFFF
 			speed=8.0		// cells per second. x2 when sprinting
 			sprintLength=5.0 // in seconds
 			sprintRecovery=10.0 // in seconds
@@ -94,15 +94,15 @@ config {
 			quickslot10='0'
 		}
 		minion {
-			ch='m'
-			fg=#BBFF55
+			char='m'
+			color=#BBFF55
 			life=10
 			speed=6.0		// cells per second
 			damage=2.0		// hp per second when at melee range
 		}
 		boss {
-			ch='Z'
-			fg=#FF8800
+			char='Z'
+			color=#FF8800
 			life=2500
 			speed=4.0		// cells per second
 			secureDist=16		// try to keep squared distance to player above this value

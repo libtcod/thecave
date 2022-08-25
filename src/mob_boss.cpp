@@ -27,8 +27,8 @@
 #include "main.hpp"
 
 Boss::Boss() {
-	static char bossChar=Config::getChar("config.creatures.boss.ch");
-	static TCODColor bossColor=Config::getColor("config.creatures.boss.fg");
+	static char bossChar=Config::getChar("config.creatures.boss.char");
+	static TCODColor bossColor=Config::getColor("config.creatures.boss.color");
 	static int bossLife=Config::getInt("config.creatures.boss.life");
 	static float pathDelay=Config::getFloat("config.creatures.pathDelay");
 	static float treasureLightRange=Config::getFloat("config.display.treasureLightRange");

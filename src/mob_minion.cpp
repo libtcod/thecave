@@ -27,8 +27,8 @@
 #include "main.hpp"
 
 Minion::Minion() {
-	static char minionChar=Config::getChar("config.creatures.minion.ch");
-	static TCODColor minionColor=Config::getColor("config.creatures.minion.fg");
+	static char minionChar=Config::getChar("config.creatures.minion.char");
+	static TCODColor minionColor=Config::getColor("config.creatures.minion.color");
 	static int minionLife=Config::getInt("config.creatures.minion.life");
 	static float pathDelay=Config::getFloat("config.creatures.pathDelay");
 	ch=minionChar;
