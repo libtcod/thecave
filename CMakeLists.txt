@@ -14,7 +14,7 @@ project(
 file(GLOB_RECURSE SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/*.cpp
 )
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} thecave.rc)
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
