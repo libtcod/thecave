@@ -190,5 +190,3 @@ const char * Config::getString(const char *name) {
 void * Config::getCustom(const char *name) {
 	return parser.getCustomProperty(name);
 }
-
-

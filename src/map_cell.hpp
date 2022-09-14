@@ -24,7 +24,6 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 // Terrain system adapted from Umbrarum Regnum Tech Demo 1
 struct TerrainType {
     const char * name; //terrain type name
@@ -34,7 +33,6 @@ struct TerrainType {
 	bool ripples; // generates ripples
     float walkCost; //cost of moving through it (either walking or swimming)
 };
-
 
 enum TerrainId {
     TERRAIN_SWAMP_DEEP,
@@ -77,8 +75,8 @@ struct Cell : public Persistant {
 	// cells already seen by the player
 	bool memory;
 	TerrainId terrain;
-	
-	// SaveListener	
+
+	// SaveListener
 	bool loadData(TCODZip *zip);
 	void saveData(TCODZip *zip);
 };
@@ -92,8 +90,7 @@ struct SubCell : public Persistant {
 	float shadow;
 	float waterCoef;
 
-	// SaveListener	
+	// SaveListener
 	bool loadData(TCODZip *zip);
 	void saveData(TCODZip *zip);
 };
-

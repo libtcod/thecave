@@ -49,4 +49,3 @@ public :
 
     static void renderDescription(TCODConsole *con,int x, int y, const TCODList<ItemModifier *>& list);
 };
-

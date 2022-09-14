@@ -165,7 +165,3 @@ TCODColor ExtendedLight::getColor(float rad) {
 	float coef=(float)(colchar-'0')/9.0f;
 	return TCODColor::lerp(color,outColor,coef);
 }
-
-
-
-

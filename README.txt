@@ -9,7 +9,7 @@ The source code is a ridiculous pile of crap. Don't dive in it, you've been warn
 Credits :
 * The intro music is "Harp test" by Mingos
 * The girl/forest picture is done with random stuff grabbed from the net. Their
-  licence probably forbid me to use them. I'll replace them with proper 
+  licence probably forbid me to use them. I'll replace them with proper
   artwork when there is an actual game...
 
 Notes :
@@ -31,13 +31,13 @@ Notes :
   generator. It's not very rich right now, but you can easily increase the number
   of text variations exponentially by tweaking data/cfg/chapter1.txg
 * In case you didn't notice (it's quite subtle), in the title screen, the wall
-  of the cave is shaded with dot3 normal mapping.  
-* The sidekick is totally dumb and only follows you. Same for the stags in 
+  of the cave is shaded with dot3 normal mapping.
+* The sidekick is totally dumb and only follows you. Same for the stags in
   the woods. No interaction with them yet.
 * I'm not happy with the drag'n drop item crafting system. To be replaced
-  with a proper crafting screen later...   
-* Currently, the source code contains 19k lines of messy C++. Totally indecent. 
-  Most of it is disabled. Amongst other things, it contains the complete 
+  with a proper crafting screen later...
+* Currently, the source code contains 19k lines of messy C++. Totally indecent.
+  Most of it is disabled. Amongst other things, it contains the complete
   Pyromancer! source code. Trust me, you don't want to stick your finger or
   any other part of your body in there.
-  The most decent modules can be found here : http://doryen.eptalys.net/demos 
+  The most decent modules can be found here : http://doryen.eptalys.net/demos

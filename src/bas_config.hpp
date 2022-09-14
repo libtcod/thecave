@@ -34,7 +34,7 @@ public :
 	static TCOD_dice_t getDice(const char *name);
 	static const char * getString(const char *name);
 	static void * getCustom(const char *name);
-	
+
 private :
 	static TCODParser parser;
 };

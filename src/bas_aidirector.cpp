@@ -156,7 +156,3 @@ void AiDirector::killCreature(Creature *cr) {
 void AiDirector::termLevel() {
 	nbScrolls=0;
 }
-
-
-
-

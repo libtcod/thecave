@@ -62,7 +62,6 @@ int UmbraError::add (std::string errStr) {
     return errors.size()-1;
 }
 
-
 //save the error log
 void UmbraError::save () {
     //if there are no errors, return
@@ -110,8 +109,6 @@ const char * UmbraError::getMessage (int idx) {
     if (idx < 0 || idx >= errors.size()) return "Requested wrong error index.";
     else return (errors.get(idx))->c_str();
 }
-
-
 
 //confirms the existence of a file. Returns false if there is no such file.
 bool UmbraError::fileExists (const char * filename, ...) {

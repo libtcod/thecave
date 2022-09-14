@@ -143,7 +143,6 @@ static const TCODColor tempKeyColor[MAX_TEMP_KEY]= {
 	TCODColor(80,3,0), // 30 �C
 };
 
-
 int WorldGenerator::getWidth() const {
 	return HM_WIDTH;
 }
@@ -286,7 +285,6 @@ void WorldGenerator::buildBaseMap() {
 	t1=TCODSystem::getElapsedSeconds();
 	DBG(("  Flatten plains... %g\n", t1-t0 ));
 	t0=t1;
-
 
 	// we use a custom erosion algo
 	//hm->rainErosion(15000*HM_WIDTH/400,0.03,0.01,wgRng);
@@ -481,7 +479,6 @@ void WorldGenerator::computeSunLight(float lightDir[3]) {
 	}
 }
 
-
 float WorldGenerator::getMapIntensity(float worldX,float worldY, float lightDir[3]) {
     // sun color & direction
     static const TCODColor sunCol(255,255,160);
@@ -520,7 +517,6 @@ TCODColor WorldGenerator::getInterpolatedColor(TCODImage *img,float x,float y) {
 	TCODColor col = TCODColor::lerp(colN,colS,dy);
 	return col;
 }
-
 
 float WorldGenerator::getInterpolatedIntensity(float worldX, float worldY) {
 	return getInterpolatedFloat(worldint,worldX,worldY,HM_WIDTH,HM_HEIGHT);
@@ -702,7 +698,6 @@ void WorldGenerator::generateRivers() {
         }
     }
 }
-
 
 /*
 void WorldGenerator::generateRivers() {
@@ -912,7 +907,6 @@ void WorldGenerator::computePrecipitations() {
 		}
 	}
 	delete [] lowResMap;
-
 
 }
 

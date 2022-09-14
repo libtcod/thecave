@@ -47,4 +47,3 @@ protected :
 	uint8_t *smoothedBuf;
 	float el;
 };
-

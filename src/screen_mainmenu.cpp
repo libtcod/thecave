@@ -87,7 +87,6 @@ int loadForest(void *dat) {
 	return 0;
 }
 
-
 void MainMenu::initialise() {
 	Screen::initialise();
 	img=new TCODImage(CON_W*2,CON_H*2);
@@ -196,7 +195,6 @@ void MainMenu::render() {
 		TCODConsole::root->clear();
 	}
 
-
 	// menu
 	if ( elapsed > 2.0f) {
 		float elcoef=1.0f;
@@ -247,7 +245,6 @@ void MainMenu::render() {
 
 	sound.endFrame();
 }
-
 
 bool MainMenu::update(float el, TCOD_key_t k,TCOD_mouse_t mouse) {
 	// update fmod

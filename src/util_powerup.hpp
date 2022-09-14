@@ -71,6 +71,3 @@ protected :
 	friend class Powerup;
 	PowerupGraph();
 };
-
-
-

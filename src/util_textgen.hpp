@@ -110,4 +110,3 @@ class NumberToLetterFunc : public ITextGeneratorFunc {
 public :
 	const char * execute(const char *params);
 };
-

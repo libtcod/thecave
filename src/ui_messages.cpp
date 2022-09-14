@@ -71,7 +71,6 @@ Logger::Logger() {
 	lookOn=false;
 }
 
-
 void Logger::render() {
 	// render messages
 	Message **it=NULL;
@@ -139,7 +138,7 @@ bool Logger::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 		}
 	}
 	messagesToRemove.clearAndDelete();
-	if ( !k.pressed && (toupper(k.c)=='M' || (!isMinimized && k.c==' ') 
+	if ( !k.pressed && (toupper(k.c)=='M' || (!isMinimized && k.c==' ')
 		|| (!isMinimized && k.vk == TCODK_ESCAPE) ) && messages.size() > 0 ) {
 		if (isMinimized) setMaximized();
 		else setMinimized();
@@ -187,7 +186,7 @@ bool Logger::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 	}
 	con->clear();
 
-	if ( !isMinimized || (rect.mouseHover && ! lookOn 
+	if ( !isMinimized || (rect.mouseHover && ! lookOn
 		&& ! GameEngine::instance->guiLoot.isActive()
 		&& ! GameEngine::instance->guiInventory.isActive()
 		) ) {

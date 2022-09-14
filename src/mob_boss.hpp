@@ -38,4 +38,3 @@ protected :
 	bool seen;
 	ExtendedLight *treasureLight;
 };
-

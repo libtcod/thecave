@@ -37,6 +37,3 @@ protected :
 	char tooltip[32];
 	bool lookOn;
 };
-
-
-

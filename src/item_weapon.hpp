@@ -26,7 +26,6 @@
 
 /*
 
-
 #define MAX_SOCKETS 3
 
 struct WeaponType {
@@ -76,4 +75,3 @@ protected :
 	void fire(float speed);
 };
 */
-

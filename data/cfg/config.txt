@@ -133,4 +133,3 @@ config {
 		itemKillCount=30		// item dropped every 30 creatures
 	}
 }
-

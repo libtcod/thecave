@@ -49,7 +49,6 @@ void Game::activate() {
 	memset(&stats,0,sizeof(stats));
 }
 
-
 void Game::render() {
 	static int nbLevels=Config::getInt("config.gameplay.nbLevels");
 	static bool debug=Config::getBool("config.debug");
@@ -514,5 +513,3 @@ void Game::termLevel() {
 	fireballs.clearAndDelete();
 	AiDirector::instance->termLevel();
 }
-
-

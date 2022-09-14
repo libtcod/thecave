@@ -45,4 +45,3 @@ protected :
 	TCODList<TCOD_thread_t> threads;
 	int nbCores;
 };
-

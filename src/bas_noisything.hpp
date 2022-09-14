@@ -31,4 +31,3 @@ public :
 	NoisyThing() { noiseOffset=TCODRandom::getInstance()->getFloat(0.0f,15.0f); }
 	float noiseOffset;
 };
-

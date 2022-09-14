@@ -44,4 +44,3 @@ float Entity::distance(const Entity &p) const {
 bool Entity::isOnScreen() const {
 	return IN_RECTANGLE(x-GameEngine::instance->xOffset,y-GameEngine::instance->yOffset,CON_W,CON_H);
 }
-

@@ -33,7 +33,7 @@ class Friend : public Creature {
 public :
 	Friend();
 	bool update(float elapsed);
-	float getWalkCost( int xFrom, int yFrom, int xTo, int yTo, void *userData ) const;	
+	float getWalkCost( int xFrom, int yFrom, int xTo, int yTo, void *userData ) const;
 
 	// SaveListener
 	bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
@@ -62,4 +62,3 @@ private :
 	float getWalkCostHideAndSeek(int xFrom, int yFrom, int xTo, int yTo, void *userData ) const;
 	float getWalkCostFollow(int xFrom, int yFrom, int xTo, int yTo, void *userData ) const;
 };
-

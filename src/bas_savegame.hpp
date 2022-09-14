@@ -54,7 +54,6 @@ public :
 	virtual void saveData(TCODZip *zip) = 0;
 };
 
-
 // a listener handles saving/loading of an independant chunk of the savegame file
 class SaveListener {
 public :
@@ -113,4 +112,3 @@ protected :
 	uint32 nbChunks;
 
 };
-

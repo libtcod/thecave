@@ -53,7 +53,6 @@ struct TerrainGenData {
 	EntityProb itemData[MAX_ENTITY_PROB];
 };
 
-
 struct LayeredTerrain {
 	const char *name;
 	TerrainGenData info[5];
@@ -584,7 +583,6 @@ void ForestScreen::generateMap(uint32 seed) {
 
 		}
 	}
-
 
 //	static float lightDir[3]={0.2f,0.0f,1.0f};
 //	dungeon->computeOutdoorLight(lightDir, sunColor);

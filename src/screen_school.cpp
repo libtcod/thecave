@@ -67,7 +67,7 @@ void SchoolScreen::generateWorld(uint32 seed) {
 		con = new TCODConsole(MAP_WIDTH/2,MAP_HEIGHT/2);
 		mapmask = new TCODImage("data/img/mapmask.png");
 		mapreflection = new TCODImage("data/img/mapreflection.png");
-	
+
 		// precompute fisheye distorsion
 		for (int px=0; px <MAP_WIDTH; px++) {
 			for (int py=0; py <MAP_HEIGHT; py++) {
@@ -187,7 +187,6 @@ int SchoolScreen::getTerrainType(int x,int y, int range) const {
 	return typeidx;
 }
 
-
 TCODColor SchoolScreen::getMapShadedColor(float worldX,float worldY,bool clouds) {
     // sun color & direction
     static TCODColor sunCol(255,255,200);
@@ -212,7 +211,6 @@ TCODColor SchoolScreen::getMapShadedColor(float worldX,float worldY,bool clouds)
 	col2.b=MAX(col2.b,col.b/2);
 	return col2;
 }
-
 
 void SchoolScreen::render() {
 
@@ -361,6 +359,5 @@ const char *SchoolScreen::genSchoolDescription(School *sch) {
 		case School::MOUNTAIN : return textGen->generate("school","${MOUNTAIN}");break;
 		case School::SNOW : return textGen->generate("school","${SNOW}");break;
 		default : return NULL; break;
-	}	
+	}
 }
-

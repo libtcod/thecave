@@ -71,7 +71,6 @@ TCODColor GameEngine::setSepia(const TCODColor &col, float coef) {
 	return TCODColor::lerp(col,ret,coef);
 }
 
-
 bool GameEngine::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {
 	static float hitFlashDelay=Config::getFloat("config.display.hitFlashDelay");
 	static TCODColor flashColor=Config::getColor("config.display.flashColor");
@@ -113,7 +112,6 @@ void GameEngine::resumeGame() {
 	pauseOn=false;
 	pauseScreen=NULL;
 }
-
 
 void GameEngine::startRipple(int dungeonx, int dungeony) {
 	rippleManager->startRipple(dungeonx,dungeony);

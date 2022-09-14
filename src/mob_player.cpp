@@ -43,7 +43,6 @@ Player::Player() : healPoints(0),lbuttonDelay(0.0f),lWalkDelay(0.0f),rbuttonDela
 	static TCODColor playerLightColor=Config::getColor("config.display.playerLightColor");
 	static float sprintLength=Config::getFloat("config.creatures.player.sprintLength");
 
-
 	ch=playerChar;
 	col=playerColor;
 	speed=playerSpeed;
@@ -83,7 +82,6 @@ float Player::getHealing() {
 	float ret=(life+healPoints)/maxLife;
 	return MIN(ret,1.0f);
 }
-
 
 void Player::termLevel() {
 	if ( path ) delete path;
@@ -207,7 +205,7 @@ void Player::render(LightMap *lightMap) {
 			stealthBar.putPixel(1,y,col);
 			transpBlit2x(&stealthBar, 0, 0, 2, 10, TCODConsole::root, CON_W/2-3, CON_H/2-3, 0.4f);
 		}
-		
+
 	}
 }
 
@@ -215,14 +213,14 @@ void Player::render(LightMap *lightMap) {
 // supported layouts:
 // hjklyubn (vi keys)
 // arrows
-// numpad 12346789 
+// numpad 12346789
 // WSAD / ZSQD (fps keys)
 void Player::getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *right) {
 	static int moveUpKey=toupper(Config::getChar("config.creatures.player.moveUpKey"));
 	static int moveDownKey=toupper(Config::getChar("config.creatures.player.moveDownKey"));
 	static int moveLeftKey=toupper(Config::getChar("config.creatures.player.moveLeftKey"));
 	static int moveRightKey=toupper(Config::getChar("config.creatures.player.moveRightKey"));
-	
+
 	int kc=toupper(key.c);
 	if ( kc == moveUpKey || key.vk == TCODK_UP || kc == 'Z' || kc =='W' || kc == 'K' || key.vk == TCODK_KP8) {
 		*up = key.pressed;
@@ -234,19 +232,18 @@ void Player::getMoveKey(TCOD_key_t key,bool *up, bool *down, bool *left, bool *r
 		*right = key.pressed;
 	} else if ( kc == 'Y' || key.vk == TCODK_KP7 ) {
 		*up = key.pressed;
-		*left = key.pressed;		
+		*left = key.pressed;
 	} else if ( kc == 'U' || key.vk == TCODK_KP9 ) {
 		*up = key.pressed;
-		*right = key.pressed;		
+		*right = key.pressed;
 	} else if ( kc == 'B' || key.vk == TCODK_KP1 ) {
 		*down = key.pressed;
-		*left = key.pressed;		
+		*left = key.pressed;
 	} else if ( kc == 'N' || key.vk == TCODK_KP3 ) {
 		*down = key.pressed;
-		*right = key.pressed;		
+		*right = key.pressed;
 	}
-	
-	
+
 }
 
 void Player::computeStealth(float elapsed) {
@@ -384,7 +381,6 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 		lWalkDelay+=elapsed;
 	}
 	if (mouse->rbutton) rbuttonDelay+=elapsed;
-
 
 	// right mouse button
 	/*
@@ -543,7 +539,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 					static int dy=1;
 					if ( IN_RECTANGLE(x+dx,y+dy,dungeon->size,dungeon->size )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -555,7 +551,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 						speed = playerSpeedDiag;
 					} else if ( IN_RECTANGLE(x+dx,y-dy,dungeon->size,dungeon->size )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y-dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y-dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y-dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y-dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -570,7 +566,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 					static int dx=1;
 					if ( IN_RECTANGLE(x+dx,y+dy,dungeon->size,dungeon->size )
 						&& dungeon->map->isWalkable((int)x+dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x+dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x+dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x + dx;
@@ -582,7 +578,7 @@ bool Player::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 						speed = playerSpeedDiag;
 					} else if ( IN_RECTANGLE(x-dx,y+dy,dungeon->size,dungeon->size )
 						&& dungeon->map->isWalkable((int)x-dx,(int)y+dy)
-						&& (! dungeon->hasCreature((int)x-dx,(int)y+dy) 
+						&& (! dungeon->hasCreature((int)x-dx,(int)y+dy)
 							|| ! dungeon->getCreature((int)x-dx,(int)y+dy)->isBlockingPath())
 						) {
 						newx = (int)x - dx;
@@ -645,7 +641,7 @@ void Player::computeFovRange(float elapsed) {
 		float fovRefSpeed=playerSpeed/2;
 		fovRangeTarget = maxFovRange - (fovSpeed*0.5/fovRefSpeed)*0.8*maxFovRange ;
 	}
-	if ( crouch ) fovRangeTarget *= 1.15f;	
+	if ( crouch ) fovRangeTarget *= 1.15f;
 	if ( fovRange > fovRangeTarget ) fovRange += (fovRangeTarget-fovRange) * elapsed ;
 	else fovRange += (fovRangeTarget-fovRange) * elapsed / rangeAccomodation;
 }

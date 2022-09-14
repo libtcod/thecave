@@ -24,10 +24,9 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 class Packer  : public Rect {
 public :
-	TCODList<Rect> rects;	
+	TCODList<Rect> rects;
 
 	Packer(int x, int y, int w, int h);
 	virtual ~Packer() {}
@@ -39,9 +38,8 @@ public :
 	void clear();
 protected :
 	int minWidth,minHeight;
-	int leftPadding,rightPadding,topPadding,bottomPadding;	
+	int leftPadding,rightPadding,topPadding,bottomPadding;
 	TCODList<Rect> empty;
 	bool findEmptyPlace(Rect *rect);
 	void addRectInternal(Rect *rect, bool duplicate);
 };
-

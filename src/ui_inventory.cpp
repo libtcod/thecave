@@ -37,7 +37,6 @@ TCODColor guiDisabledText(95,95,95);
 TCODColor guiText(255,180,0);
 TCODColor guiHighlightedText(114,114,255);
 
-
 static const char *tabNames[NB_INV_TABS] = {
 	"All","Arm","Wea","Foo","Mis"
 };
@@ -119,13 +118,13 @@ void Inventory::checkDefaultAction(Item *item) {
 			}
 		}
 	}
-	if ( (GameEngine::instance->guiLoot.isActive() && !dropFirst ) 
+	if ( (GameEngine::instance->guiLoot.isActive() && !dropFirst )
 		|| (!GameEngine::instance->guiLoot.isActive() && dropFirst )){
 		// bad default action. swap use and drop
 		if ( useAction && dropAction ) {
 			ItemActionId tmp=*useAction;
 			*useAction=*dropAction;
-			*dropAction=tmp;				
+			*dropAction=tmp;
 		}
 	}
 }
@@ -139,7 +138,7 @@ void Inventory::render() {
 		con->setDefaultBackground(guiBackground);
 		con->setDefaultForeground(guiText);
 		int w2=INV_WIDTH/2;
-		con->printFrame(0,0,w2,rect.h,true,TCOD_BKGND_SET,owner ? "Inventory" 
+		con->printFrame(0,0,w2,rect.h,true,TCOD_BKGND_SET,owner ? "Inventory"
 			: container->name ? container->name : container->typeName);
 		con->setChar(w2-1,0,'x');
 		con->setCharForeground(w2-1,0,closeOn ? guiHighlightedText : guiText);
@@ -317,24 +316,24 @@ void Inventory::deactivate() {
 
 void Inventory::runActionOnItem(ItemActionId id, Item *item) {
 	switch(id) {
-		case ITEM_ACTION_USE : 
+		case ITEM_ACTION_USE :
 			item->use();
 			if ( owner ) initialize(owner);
 			else initialize(container);
 		break;
-		case ITEM_ACTION_DROP : 
+		case ITEM_ACTION_DROP :
 			if ( GameEngine::instance->guiLoot.isActive() ) {
 				Item *newItem=owner->removeFromInventory(item);
 				GameEngine::instance->guiLoot.container->putInside(newItem);
 				GameEngine::instance->guiLoot.initialize(GameEngine::instance->guiLoot.container);
 			} else {
 				item->drop();
-			} 
+			}
 			if ( owner ) initialize(owner);
 			else initialize(container);
 		break;
-		case ITEM_ACTION_TAKE : 
-			item->pickup(&GameEngine::instance->player); 
+		case ITEM_ACTION_TAKE :
+			item->pickup(&GameEngine::instance->player);
 			initialize(container);
 			if ( GameEngine::instance->guiInventory.isActive() ) {
 				GameEngine::instance->guiInventory.initialize(&GameEngine::instance->player);
@@ -404,7 +403,7 @@ bool Inventory::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 					count--;
 				}
 			}
-			
+
 			runActionOnItem(*id,item);
 			if ( *id == ITEM_ACTION_THROW ) {
 				dragx=dragStartX=mouse.cx;
@@ -501,8 +500,8 @@ bool Inventory::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 			dragOut=cmenudrag=false;
 			dragItem=NULL;
 		} else if (mouse.lbutton || cmenudrag) {
-			if (! dragOut && isDragging && 
-				(dragx < rect.x ||dragx >= rect.x+INV_WIDTH/2 || dragy < rect.y 
+			if (! dragOut && isDragging &&
+				(dragx < rect.x ||dragx >= rect.x+INV_WIDTH/2 || dragy < rect.y
 				|| dragy >= rect.y+INV_HEIGHT ) ) {
 				// dragging out of inventory frame
 				dragOut=true;
@@ -534,5 +533,3 @@ bool Inventory::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 	}
 	return true;
 }
-
-

@@ -48,4 +48,3 @@ protected :
 
 	void spawnMinion(bool chase);
 };
-

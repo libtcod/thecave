@@ -61,4 +61,3 @@ private :
 	int minx,miny,maxx,maxy;
 	uint8_t *data;
 };
-

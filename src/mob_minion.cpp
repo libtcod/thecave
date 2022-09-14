@@ -62,7 +62,7 @@ bool Minion::update(float elapsed) {
 		// track player
 		if (! path) {
 			path=new TCODPath(game->dungeon->size,game->dungeon->size,this,game);
-		} 
+		}
 		if ( pathTimer > pathDelay ) {
 			int dx,dy;
 			path->getDestination(&dx,&dy);
@@ -82,4 +82,3 @@ bool Minion::update(float elapsed) {
 	}
 	return true;
 }
-

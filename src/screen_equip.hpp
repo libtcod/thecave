@@ -41,4 +41,3 @@ protected :
 	void deactivate();
 	bool pauseOn;
 };
-

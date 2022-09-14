@@ -144,4 +144,3 @@ float Boss::getWalkCost( int xFrom, int yFrom, int xTo, int yTo, void *userData 
 	if ( pdist < secureDist ) return 1.0f + secureCoef*(secureDist - pdist);
 	return 1.0f;
 }
-

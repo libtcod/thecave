@@ -72,7 +72,6 @@ float LightMap::getPlayerFog(int x, int y) {
 	return fogLevel;
 }
 
-
 // apply a light map to an image.
 void LightMap::applyToImage(TCODImage *image,
 	int minx2x,int miny2x,int maxx2x,int maxy2x) {

@@ -140,8 +140,6 @@ void Condition::applyTo(Creature *cr) {
 	}
 }
 
-
-
 Creature::Creature() : path(NULL),ignoreCreatures(true),burn(false),
 	flags(0),mainHand(NULL),offHand(NULL),asItem(NULL),
 	fovRange(0),walkTimer(0.0f),pathTimer(0.0f),curDmg(0.0f) {
@@ -156,7 +154,6 @@ Creature::Creature() : path(NULL),ignoreCreatures(true),burn(false),
 Creature::~Creature() {
 	if ( path ) delete path;
 }
-
 
 void Creature::addCondition(Condition *cond) {
 	conditions.push(cond);
@@ -174,7 +171,6 @@ Condition *Creature::getCondition(ConditionTypeId type, const char *alias) {
 	}
 	return NULL;
 }
-
 
 Creature *Creature::getCreature(CreatureTypeId id) {
 	Creature *ret=NULL;
@@ -562,4 +558,3 @@ bool Creature::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	}
 	return true;
 }
-

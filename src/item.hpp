@@ -234,7 +234,6 @@ struct ItemFeature {
 
 };
 
-
 enum InventoryTabId {
 	INV_ALL,
 	INV_ARMOR,
@@ -270,7 +269,6 @@ public :
 	static Item *getItem(const ItemType *type, float x, float y, bool createComponents=true);
 	static Item *getItem(ItemTypeId type, float x, float y, bool createComponents=true);
 	static Item *getRandomWeapon(ItemTypeId id,ItemClass itemClass);
-
 
 	static bool init();
 	static ItemType *getType(const char *name);
@@ -339,7 +337,6 @@ public :
 	void addComponent(Item *component);
 	ItemCombination *getCombination() const;
 
-
 	const ItemType *typeData;
 	ItemClass itemClass;
 	TCODColor col;
@@ -382,6 +379,3 @@ protected :
 	void renderDescriptionFrame(int x, int y, bool below=true);
 	void generateComponents();
 };
-
-
-

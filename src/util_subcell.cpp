@@ -184,4 +184,3 @@ void transpRect2x(TCODConsole *con, int x, int y, int w2, int h2, const TCODColo
 */
 	transpBlit2x(img,0,0,w2,h2,con,x,y,alpha);
 }
-

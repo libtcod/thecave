@@ -97,4 +97,3 @@ protected :
 	void computeAspectRatio();
 
 };
-

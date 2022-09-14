@@ -468,5 +468,3 @@ bool PowerupGraph::update(float elapsed, TCOD_key_t key,TCOD_mouse_t *mouse) {
 	}
 	return true;
 }
-
-

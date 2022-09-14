@@ -26,7 +26,7 @@
 
 class ForestScreen : public GameEngine, public SaveListener {
 public :
-	static ForestScreen *instance; 
+	static ForestScreen *instance;
 	Friend *fr;
 
 	ForestScreen();
@@ -36,9 +36,9 @@ public :
 	bool update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse);
     void generateMap(uint32 seed); // generate a new random map
     void loadMap(uint32 seed); // load map from savegame
-    
+
     void onFontChange();
-    
+
     // SaveListener
 	bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
 	void saveData(uint32 chunkId, TCODZip *zip);
@@ -48,9 +48,8 @@ protected :
     void activate();
     void deactivate();
     void placeTree(Dungeon *dungeon,int x, int y, const ItemType * treeType);
-	void setCanopy(int x, int y, const ItemType * treeType); 
+	void setCanopy(int x, int y, const ItemType * treeType);
 	void placeHouse(Dungeon *dungeon,int doorx, int doory,Entity::Direction dir);
     int debugMap;
 	TextInput textInput;
 };
-

@@ -59,4 +59,3 @@ protected :
 	int titlex,titley,titlew,titleh;
 	Fire *fire;
 };
-

@@ -66,7 +66,7 @@ bool FollowBehavior::update(Creature *crea, float elapsed) {
 		if (crea->walk(elapsed)) {
 			standDelay=0.0f;
 		}
-	}		
+	}
 	return true;
 }
 
@@ -75,7 +75,6 @@ bool FollowBehavior::update(Creature *crea, float elapsed) {
 #define CLOSE_RANGE 2.0f
 // range below which fishes try to get closer from each other
 #define FAR_RANGE 10.0f
-
 
 void HerdBehavior::recomputeHerds() {
 }
@@ -114,7 +113,7 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 			}
 		}
 	}
-	
+
 	crea1->dx=CLAMP(-crea1->speed,crea1->speed,crea1->dx);
 	crea1->dy=CLAMP(-crea1->speed,crea1->speed,crea1->dy);
 	// interaction with scare points
@@ -150,11 +149,9 @@ bool HerdBehavior::update(Creature *crea1, float elapsed) {
 			}
 		}
 	}
-	return true;	
+	return true;
 }
 
 void HerdBehavior::addScarePoint(int x, int y, float life) {
 	scare.push(new ScarePoint(x,y,life));
 }
-
-

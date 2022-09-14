@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include "main.hpp"
 
-
 #define SECURE_DIST 12
 #define SECURE_COEF 3.0f
 #define NB_CAUGHT 25
@@ -51,7 +50,7 @@ bool Friend::update(float elapsed) {
 	if (! currentBehavior ) {
 		FollowBehavior *behavior = new FollowBehavior(new AvoidWaterWalkPattern());
 		behavior->setLeader(&GameEngine::instance->player);
-		currentBehavior=behavior;	
+		currentBehavior=behavior;
 	}
 	return Creature::update(elapsed);
 }
@@ -106,7 +105,7 @@ bool Friend::updateHideAndSeek(float elapsed) {
 						talk(talkGenerator->generate("friend","${HS_SPOTTED}"));
 						see=true;
 					}
-				} 
+				}
 			}
 			if (! inFov && see ) {
 				see=false;
@@ -115,7 +114,7 @@ bool Friend::updateHideAndSeek(float elapsed) {
 			if (! see && talkText.delay == 0.0f && standDelay > 5.0f ) {
 				talk(talkGenerator->generate("friend","${HS_TEASE}"));
 			}
-		}		
+		}
 	}
 	return true;
 }
@@ -140,9 +139,9 @@ bool Friend::updateCatchMe(float elapsed) {
 					awayCount=-5;
 				} else if ( lostDelay > 0.0f ) {
 					talk(talkGenerator->generate("friend","${CATCH_LOST}"));
-					lostDelay=-10.0f;		
+					lostDelay=-10.0f;
 				}
-			} 
+			}
 		} else {
 			lostDelay = -5.0f;
 		}
@@ -172,7 +171,7 @@ bool Friend::updateCatchMe(float elapsed) {
 			int destx,desty;
 			float dx = x - player->x;
 			float dy = y - player->y;
-			if ( pdist > 0 ) { 
+			if ( pdist > 0 ) {
 				if ( pdist < SECURE_DIST ) {
 					// get away from player
 					destx = (int)(x + dx*SECURE_DIST/pdist);
@@ -180,8 +179,8 @@ bool Friend::updateCatchMe(float elapsed) {
 					awayCount=0;
 				} else {
 					// get closer to player
-					destx = (int)(player->x + dx * SECURE_DIST/pdist); 				
-					desty = (int)(player->y + dy * SECURE_DIST/pdist); 				
+					destx = (int)(player->x + dx * SECURE_DIST/pdist);
+					desty = (int)(player->y + dy * SECURE_DIST/pdist);
 					awayCount++;
 				}
 			} else {
@@ -198,7 +197,7 @@ bool Friend::updateCatchMe(float elapsed) {
 			pathTimer=0.0f;
 	} else {
 		if (walk(elapsed)) standDelay=0.0f;
-	}		
+	}
 	return true;
 }
 

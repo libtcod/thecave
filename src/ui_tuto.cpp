@@ -441,5 +441,3 @@ bool Tutorial::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	selectedItem=zip->getInt();
 	return true;
 }
-
-

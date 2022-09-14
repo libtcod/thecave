@@ -24,5 +24,3 @@ public:
     //toggles
     void togglePause(void);
 };
-
-

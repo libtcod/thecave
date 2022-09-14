@@ -41,7 +41,7 @@ void Descriptor::setFocus(int mousex, int mousey, int x, int y, bool lookOn) {
 	item=NULL;
 	creature=NULL;
 	this->lookOn=lookOn;
-	if ( IN_RECTANGLE(x,y,dungeon->size,dungeon->size) 
+	if ( IN_RECTANGLE(x,y,dungeon->size,dungeon->size)
 		&& player->isInRange(x,y) && dungeon->map->isInFov(x,y)) {
 		if ( x == GameEngine::instance->player.x && y == GameEngine::instance->player.y ) creature=&GameEngine::instance->player;
 		else creature=dungeon->getCreature(x,y);
@@ -74,4 +74,3 @@ void Descriptor::render() {
 		}
 	}
 }
-

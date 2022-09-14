@@ -49,4 +49,3 @@ class UmbraModSpeed : public UmbraWidget {
         int fps;
 		bool isMinimised;
 };
-

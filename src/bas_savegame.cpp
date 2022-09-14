@@ -200,6 +200,3 @@ bool SaveGame::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 	}
 	return false;
 }
-
-
-

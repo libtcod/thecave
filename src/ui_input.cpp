@@ -62,5 +62,3 @@ bool TextInput::update(float elapsed, TCOD_key_t k) {
 	if (txt) return txt->update(k);
 	return true;
 }
-
-

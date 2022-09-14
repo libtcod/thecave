@@ -32,8 +32,6 @@ public :
 	void render();
 	bool update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse);
 
-	
-
 	int level; // current dungeon level
 	bool bossIsDead;
 	bool bossSeen;
@@ -49,4 +47,3 @@ protected :
 	void initialise();
     void activate();
 };
-

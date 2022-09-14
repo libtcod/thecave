@@ -141,4 +141,3 @@ void Screen::setFadeOut (int lengthInMilli, TCODColor col) {
     fadeOutLength = lengthInMilli;
     fadeOutColor = col;
 }
-

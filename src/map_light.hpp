@@ -63,4 +63,3 @@ protected :
 	float getIntensity();
 	TCODColor getColor(float rad);
 };
-

@@ -93,7 +93,6 @@
 #define DBG(x)
 #endif
 
-
 extern TCODNoise noise1d;
 extern TCODNoise noise2d;
 extern TCODNoise noise3d;
@@ -108,4 +107,3 @@ extern Sound sound;
 extern Tutorial *tutorial;
 extern ThreadPool *threadPool;
 extern TerrainType terrainTypes[NB_TERRAINS];
-

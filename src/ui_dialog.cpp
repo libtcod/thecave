@@ -148,7 +148,7 @@ void MultiPosDialog::endDragging(int mousex,int mousey) {
 	int posnum=0;
 	int bestdist=100000;
 	int bestpos=0;
-	// find the best set position 
+	// find the best set position
    	for (posnum=0; posnum < possiblePos.size(); posnum++ ) {
    		UmbraRect curRect=*possiblePos.get(posnum);
    		if ( rect.x == curRect.x && rect.y == curRect.y ) {
@@ -156,15 +156,15 @@ void MultiPosDialog::endDragging(int mousex,int mousey) {
    			for ( MultiPosDialog **it=set.begin();it!=set.end(); it++) {
    				if ( *it != this ) {
    					UmbraRect *prect = (*it)->possiblePos.get(posnum);
-   					int dx = prect->x - (*it)->rect.x; 
-   					int dy = prect->y - (*it)->rect.y; 
-   					dist += dx*dx+dy*dy; 
+   					int dx = prect->x - (*it)->rect.x;
+   					int dy = prect->y - (*it)->rect.y;
+   					dist += dx*dx+dy*dy;
 				}
-			}   	
+			}
 			if ( dist < bestdist ) {
 				bestdist=dist;
 				bestpos=posnum;
-			}		
+			}
 		}
    	}
 	for ( MultiPosDialog **it=set.begin();it!=set.end(); it++) {

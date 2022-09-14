@@ -49,7 +49,6 @@ void MapCarver::vline(TCODMap *map,int x, int y1, int y2) {
 	} while (y!=y2);
 }
 
-
 // draw a vertical line up until we reach an empty space
 void MapCarver::vlineUp(TCODMap *map,int x, int y) {
 	while (y >= 0 && !map->isTransparent(x,y)) {
@@ -105,4 +104,3 @@ void MapCarver::hlineRight(TCODMap *map,int x, int y) {
 		x++;
 	}
 }
-

@@ -68,4 +68,3 @@ class UmbraWidget : public UmbraModule {
 
         virtual void endDragging(int /* mousex */, int /* mousey */) {}
 };
-

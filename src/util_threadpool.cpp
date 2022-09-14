@@ -147,5 +147,3 @@ void ThreadPool::waitUntilFinished(int jobId) {
 	}
 	TCODSystem::mutexOut(todoMutex);
 }
-
-

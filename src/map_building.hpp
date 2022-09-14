@@ -51,8 +51,8 @@ public :
 	void setHuntingHide(Dungeon *dungeon);
 protected :
 	Building(int w, int h);
-	void buildExternalWalls();		
-	void placeRandomDoor(TCODRandom *rng);		
-	void placeRandomWindow(TCODRandom *rng);		
+	void buildExternalWalls();
+	void placeRandomDoor(TCODRandom *rng);
+	void placeRandomWindow(TCODRandom *rng);
 	bool getFreeFloor(int *fx, int *fy);
 };

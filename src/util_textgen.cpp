@@ -50,9 +50,8 @@ const char * RandomIntFunc::execute(const char *params) {
 	sscanf(params,"%d,%d",&min,&max);
 	int i=riRng->getInt(min,max);
 	sprintf(buf,"%d",i);
-	return buf;	
+	return buf;
 }
-
 
 static inline bool startsWith(const char *s, const char *sub) {
 	return strncmp(s,sub,strlen(sub)) == 0;
@@ -139,7 +138,7 @@ char * TextGenerator::goatSoup2(const char *generator, const char *source,char *
 				(*buf++)=c;
 				*buf=0;
 			}
-		} else {	
+		} else {
 			source++;
 			if ( c == '?' && textGenRng->getInt(0,1) == 0 ) {
 				// ignore the var
@@ -152,7 +151,7 @@ char * TextGenerator::goatSoup2(const char *generator, const char *source,char *
 			*end=0;
 			char *funcptr=(char *)strchr(source,'(');
 			bool wasfunc=false;
-			// look for a function 
+			// look for a function
 			if ( funcptr && funcptr < end ) {
 				*funcptr=0;
 				TextGenFunc *func=NULL;
@@ -231,7 +230,7 @@ void TextGenerator::addGlobalValue(const char *varName, const char *varValue, ..
 	va_end(ap);
 	Rule *rule=NULL;
 	for (Rule **it=globalRules.begin(); it != globalRules.end(); it++ ) {
-		if ( strcmp((*it)->name,varName) == 0 ) {	
+		if ( strcmp((*it)->name,varName) == 0 ) {
 			rule=*it;
 			break;
 		}
@@ -276,7 +275,7 @@ void TextGenerator::setLocalFunction(const char *funcName, ITextGeneratorFunc *f
 
 void TextGenerator::deleteGlobalValue(const char *varName) {
 	for (Rule **it=globalRules.begin(); it != globalRules.end(); it++ ) {
-		if ( strcmp((*it)->name,varName) == 0 ) {	
+		if ( strcmp((*it)->name,varName) == 0 ) {
 			Rule *rule=*it;
 			for ( const char **sit=rule->values.begin(); sit != rule->values.end(); sit++) {
 				free((void*)*sit);
@@ -286,7 +285,7 @@ void TextGenerator::deleteGlobalValue(const char *varName) {
 			globalRules.remove(it);
 			return;
 		}
-	}	
+	}
 }
 
 const char *TextGenerator::generateBuf(const char *generator, char *buf, const char *source, ...) {
@@ -297,7 +296,7 @@ const char *TextGenerator::generateBuf(const char *generator, char *buf, const c
 	va_end(ap);
 	if (! init) parseFile();
 	goatfirst=true;
-	goatSoup2(generator,tmp,buf);	
+	goatSoup2(generator,tmp,buf);
 	return buf;
 }
 
@@ -310,8 +309,6 @@ const char *TextGenerator::generate(const char *generator, const char *source, .
 	va_end(ap);
 	goatfirst=true;
 	if (! init) parseFile();
-	goatSoup2(generator,tmp,buf);	
+	goatSoup2(generator,tmp,buf);
 	return buf;
 }
-
-

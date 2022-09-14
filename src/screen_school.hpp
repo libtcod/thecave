@@ -76,4 +76,3 @@ protected :
 	// apply sun light & cloud shadow to interpolated color
 	TCODColor getMapShadedColor(float worldX,float worldY,bool clouds);
 };
-

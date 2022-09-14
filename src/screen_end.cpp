@@ -162,7 +162,6 @@ void EndScreen::renderText(int x,int y, int w, const char *txt) {
 	}
 }
 
-
 PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char *textgen, int chapter)
 	: EndScreen("",0.0f,false),chapter(chapter) {
 	title=NULL;
@@ -209,7 +208,6 @@ void PaperScreen::onFontChange() {
 	pix=surf2;
 }
 
-
 void PaperScreen::render() {
 	static TCODImage *paper=NULL;
 	if (!paper) {
@@ -255,4 +253,3 @@ void PaperScreen::deactivate() {
 	TCODSystem::registerSDLRenderer(NULL);
 	TCODConsole::root->setDirty(0,0,CON_W,CON_H);
 }
-

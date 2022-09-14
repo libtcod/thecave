@@ -33,4 +33,3 @@ protected :
 	float pathTimer;
 	bool seen;
 };
-

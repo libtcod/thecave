@@ -117,7 +117,7 @@ ItemFeature *ItemFeature::getLight(float range, const TCODColor &color, float pa
 	return ret;
 }
 
-ItemFeature *ItemFeature::getAttack(AttackWieldType wield, float minCastDelay, float maxCastDelay, float minReloadDelay, 
+ItemFeature *ItemFeature::getAttack(AttackWieldType wield, float minCastDelay, float maxCastDelay, float minReloadDelay,
 		float maxReloadDelay, float minDamagesCoef, float maxDamagesCoef, int flags ) {
 	ItemFeature *ret=new ItemFeature();
 	ret->id = ITEM_FEAT_ATTACK;
@@ -175,9 +175,9 @@ bool Item::init() {
  		{NB_ITEMS,INV_MISC,"wooden handle", TCODColor::darkAmber, ')', false, ITEM_STACKABLE, ITEM_HANDLE},
  		{NB_ITEMS,INV_MISC,"small bronze blade", TCODColor::brass, ')', false, ITEM_STACKABLE, ITEM_SMALL_BLADE},
 
-		{NB_ITEMS,INV_MISC,"pine", TCODColor::darkAmber, 'T', false, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE}, 
-		{NB_ITEMS,INV_MISC,"oak", TCODColor::darkAmber, 'T', true, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE }, 
-		{NB_ITEMS,INV_MISC,"apple tree", TCODColor::darkAmber, 'T', true, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE}, 
+		{NB_ITEMS,INV_MISC,"pine", TCODColor::darkAmber, 'T', false, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE},
+		{NB_ITEMS,INV_MISC,"oak", TCODColor::darkAmber, 'T', true, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE },
+		{NB_ITEMS,INV_MISC,"apple tree", TCODColor::darkAmber, 'T', true, ITEM_NOT_PICKABLE|ITEM_NOT_WALKABLE|ITEM_NOT_TRANSPARENT,ITEM_TREE},
 
 		{NB_ITEMS,INV_FOOD,"health potion",TCODColor(127,127,255),'!', false, ITEM_DELETE_ON_USE|ITEM_STACKABLE,0},
 		{NB_ITEMS,INV_FOOD,"apple",TCODColor(255,92,92),'a', true, ITEM_DELETE_ON_USE|ITEM_SOFT_STACKABLE,0},
@@ -260,11 +260,11 @@ ItemType *Item::getType(const char *name) {
 	return NULL;
 }
 
-ItemType *Item::getType(ItemTypeId id) { 
+ItemType *Item::getType(ItemTypeId id) {
 	if ( types.size() == 0 ) {
 		if (! init()) exit(0); // fatal error. cannot load items configuration
 	}
-	return types.get(id); 
+	return types.get(id);
 }
 
 bool ItemType::hasComponents() const {
@@ -441,10 +441,10 @@ void Item::generateComponents() {
 	int maxOptionals=itemClass-ITEM_CLASS_STANDARD;
 	int i=rng->getInt(0,combination->nbIngredients-1);
 	for (int count=combination->nbIngredients; count > 0 ; count--) {
-		if (combination->ingredients[i].revert && 
+		if (combination->ingredients[i].revert &&
 			(!combination->ingredients[i].optional || maxOptionals > 0 )) {
 			if ( combination->ingredients[i].optional ) maxOptionals--;
-			ItemType *componentType=NULL; 
+			ItemType *componentType=NULL;
 			if (combination->ingredients[i].tag) {
 				componentType=getTypeFromTag(combination->ingredients[i].tag);
 			} else {
@@ -477,13 +477,13 @@ ItemCombination *Item::getCombination(const Item *it1, const Item *it2) {
 	while (cur->resultType != NB_ITEMS) {
 		if ( cur->nbIngredients == 1 && (cur->tool.tag || cur->tool.type != NB_ITEMS)) {
 			// tool + 1 ingredient
-			if ( (it1->isA(cur->tool.tag) || it1->isA(cur->tool.type)) 
+			if ( (it1->isA(cur->tool.tag) || it1->isA(cur->tool.type))
 				&& (it2->isA(cur->ingredients[0].tag) || it2->isA(cur->ingredients[0].type) ) ) return cur;
 			if ( (it2->isA(cur->tool.tag) || it2->isA(cur->tool.type))
 				&& (it1->isA(cur->ingredients[0].tag) || it1->isA(cur->ingredients[0].type) ) ) return cur;
 		} else if ( cur->nbIngredients == 2 && cur->tool.tag == 0 && cur->tool.type == NB_ITEMS ) {
 			// 2 ingredients (no tool)
-			if ( (it1->isA(cur->ingredients[0].tag) || it1->isA(cur->ingredients[0].type)) 
+			if ( (it1->isA(cur->ingredients[0].tag) || it1->isA(cur->ingredients[0].type))
 				&& (it2->isA(cur->ingredients[1].tag) || it2->isA(cur->ingredients[1].type) ) ) return cur;
 			if ( (it2->isA(cur->ingredients[0].tag) || it2->isA(cur->ingredients[0].type))
 				&& (it1->isA(cur->ingredients[1].tag) || it1->isA(cur->ingredients[1].type) ) ) return cur;
@@ -512,7 +512,7 @@ bool Item::putInside(Item *it) {
 	it->y=y;
 	return true;
 }
- 
+
 // remove it from this container (false if not inside)
 bool Item::pullOutside(Item *it) {
 	ItemFeature *cont=getFeature(ITEM_FEAT_CONTAINER);
@@ -521,8 +521,7 @@ bool Item::pullOutside(Item *it) {
 	stack.remove(it);
 	it->container=NULL;
 	return true;
-} 
-
+}
 
 // add to the list, posibly stacking
 Item * Item::addToList(TCODList<Item *> *list) {
@@ -576,13 +575,12 @@ Item * Item::removeFromList(TCODList<Item *> *list, bool fast) {
 		}
 	} else if ( container && list->contains(container)) {
 		// item is inside a container
-		container->pullOutside(this);		
+		container->pullOutside(this);
 	}
 	if (fast) list->removeFast(this);
 	else list->remove(this);
 	return this;
 }
-
 
 void Item::render(LightMap *lightMap) {
 	int conx=(int)(x-GameEngine::instance->xOffset);
@@ -592,8 +590,8 @@ void Item::render(LightMap *lightMap) {
 	TCODColor lightColor=lightMap->getColor(conx,cony);
 	float shadow = dungeon->getShadow(x*2,y*2);
 	float clouds = dungeon->getCloudCoef(x*2,y*2);
-	shadow = MIN(shadow,clouds); 
-	lightColor = lightColor * shadow; 
+	shadow = MIN(shadow,clouds);
+	lightColor = lightColor * shadow;
 	TCODConsole::root->setChar(conx,cony,ch);
 	TCODConsole::root->setCharForeground(conx,cony,col*lightColor);
 	TCODConsole::root->setCharBackground(conx,cony,dungeon->getShadedGroundColor(getSubX(),getSubY()));
@@ -650,7 +648,7 @@ const char *Item::getRateName(float rate) const {
 	else if ( rate <= 3.0f ) rateIdx = 2;
 	else if ( rate <= 5.0f ) rateIdx = 3;
 	else rateIdx = 4;
-	return ratename[rateIdx];	
+	return ratename[rateIdx];
 }
 
 void Item::renderGenericDescription(int x, int y, bool below) {
@@ -682,7 +680,7 @@ void Item::renderGenericDescription(int x, int y, bool below) {
     	minDamages=(int)MIN(1.0f,minDamages);
     	maxDamages=(int)MIN(1.0f,maxDamages);
 
-		if ( minDamages != maxDamages ) {		
+		if ( minDamages != maxDamages ) {
 			descCon->print(CON_W/4,cy++,"%d-%d damages/hit", (int)minDamages,(int)maxDamages);
 		} else {
 			descCon->print(CON_W/4,cy++,"%d damages/hit", (int)minDamages);
@@ -722,7 +720,7 @@ void Item::convertTo(ItemType *newType) {
 			}
 		}
 		owner->addToInventory(newItem);
-	} else GameEngine::instance->dungeon->addItem(newItem);	
+	} else GameEngine::instance->dungeon->addItem(newItem);
 }
 
 bool Item::age(float elapsed) {
@@ -800,7 +798,7 @@ bool Item::update(float elapsed, TCOD_key_t key, TCOD_mouse_t *mouse) {
 					// horizontal wall bounce
 					dy=-dy;
 				}
-			}			
+			}
 		}
 		if ( x != oldx || y != oldy ) {
 			dungeon->getCell(oldx,oldy)->items.removeFast(this);
@@ -872,11 +870,11 @@ bool Item::update(float elapsed, TCOD_key_t key, TCOD_mouse_t *mouse) {
 				targetx=dx;
 				targety=dy;
 			}
-		break;	
+		break;
 		}
 	}
 	feat=getFeature(ITEM_FEAT_HEAT);
-	if (feat) {	
+	if (feat) {
 		heatTimer += elapsed;
 		if ( heatTimer > 1.0f) {
 			// warm up adjacent items
@@ -935,11 +933,11 @@ void Item::use() {
 				GameEngine::instance->dungeon->addItem(it);
 				GameEngine::instance->log.info("You kick %s. %s falls on the ground.",
 					theName(),
-					it->AName());				
+					it->AName());
 			}
 		} else {
 			if ( TCODRandom::getInstance()->getInt(0,2) == 0 ) {
-				GameEngine::instance->log.info("You kick %s.",theName());				
+				GameEngine::instance->log.info("You kick %s.",theName());
 				GameEngine::instance->log.warn("You feel a sharp pain in the foot.");
 				GameEngine::instance->player.takeDamage(2);
 			} else {
@@ -987,10 +985,10 @@ Item * Item::pickup(Creature *owner, const char *verb) {
 	ItemFeature *feat=getFeature(ITEM_FEAT_ATTACK);
 	if ( feat ) {
 		// auto equip weapon if hand is empty
-		if (owner->mainHand == NULL && 
+		if (owner->mainHand == NULL &&
 			(feat->attack.wield == WIELD_ONE_HAND || feat->attack.wield == WIELD_MAIN_HAND ) ) {
 			owner->mainHand=ret;
-		} else if ( owner->offHand == NULL && 
+		} else if ( owner->offHand == NULL &&
 			(feat->attack.wield == WIELD_ONE_HAND || feat->attack.wield == WIELD_OFF_HAND ) ) {
 			owner->offHand=ret;
 		} else if ( owner->mainHand == NULL && owner->offHand == NULL && feat->attack.wield == WIELD_TWO_HANDS ) {
@@ -1099,7 +1097,7 @@ const char *Item::AName() const {
 		bool es = (nameToUse[strlen(nameToUse)-1] == 's');
 		sprintf(buf,"%d %s%s",cnt,nameToUse, es ? "es":"s");
 	}
-	return buf;                                   
+	return buf;
 }
 
 const char *Item::aName() const {
@@ -1116,7 +1114,7 @@ const char *Item::aName() const {
 		bool es = (nameToUse[strlen(nameToUse)-1] == 's');
 		sprintf(buf,"%d %s%s",cnt,nameToUse, es ? "es":"s");
 	}
-	return buf;                                   
+	return buf;
 }
 
 const char *Item::TheName() const {
@@ -1129,7 +1127,7 @@ const char *Item::TheName() const {
 		bool es = (nameToUse[strlen(nameToUse)-1] == 's');
 		sprintf(buf,"The %d %s%s",cnt,nameToUse, es ? "es":"s");
 	}
-	return buf;                                   
+	return buf;
 }
 
 const char *Item::theName() const {
@@ -1142,7 +1140,7 @@ const char *Item::theName() const {
 		bool es = (nameToUse[strlen(nameToUse)-1] == 's');
 		sprintf(buf,"the %d %s%s",cnt,nameToUse, es ? "es":"s");
 	}
-	return buf;                                   
+	return buf;
 }
 
 #define ITEM_CHUNK_VERSION 5
@@ -1204,5 +1202,3 @@ void Item::saveData(uint32 chunkId, TCODZip *zip) {
 		zip->putFloat((*it)->value);
 	}
 }
-
-

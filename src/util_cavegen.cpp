@@ -213,5 +213,3 @@ bool CaveGenerator::visitNode(TCODBsp *node, void *userData) {
 	}
 	return true;
 }
-
-

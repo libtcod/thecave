@@ -65,7 +65,6 @@ public :
 	ScarePoint(float x, float y, float life=SCARE_LIFE) : Entity(x,y),life(life) {}
 };
 
-
 class HerdBehavior : public Behavior {
 public :
 	HerdBehavior(WalkPattern *walkPattern) : Behavior(walkPattern) {}

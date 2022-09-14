@@ -565,7 +565,6 @@ void Dungeon::killCreaturesAtRange(int radius) {
 	}
 }
 
-
 void Dungeon::renderCorpses(LightMap *lightMap) {
 	for ( Creature **it=corpses.begin(); it != corpses.end(); it++ ) {
 		if ( map->isInFov((int)(*it)->x,(int)(*it)->y) ) (*it)->render(lightMap);
@@ -610,7 +609,6 @@ Item *Dungeon::getItemTag(int x, int y, unsigned long long tag) {
 	}
 	return NULL;
 }
-
 
 TCODList <Item *> *Dungeon::getItems(int x, int y) const {
 	if (!IN_RECTANGLE(x,y,size,size)) return NULL;
@@ -752,7 +750,6 @@ void Dungeon::computeFov(int x, int y) {
 		}
 	}
 }
-
 
 void Dungeon::applyShadowMap() {
 	for (int x=0; x < size2x; x++ ) {
@@ -918,4 +915,3 @@ bool Dungeon::loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip) {
 
 	return true;
 }
-
