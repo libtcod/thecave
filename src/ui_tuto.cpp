@@ -263,7 +263,7 @@ void Tutorial::init() {
 }
 
 void Tutorial::openMenu() {
-	if ( GameEngine::instance->guiInventory.isActive() ) lastPage=TUTO_INVENTORY;
+	if ( GameEngine::instance->guiInventory.getActive() ) lastPage=TUTO_INVENTORY;
 	else {
 		renderMenu=true;
 		menu.clear();
@@ -419,11 +419,11 @@ void Tutorial::startTuto(TutorialPageId newId) {
 void Tutorial::closeLiveTuto() {
 	if ( id != TUTO_NONE ) {
 		fadeOutDelay=FADE_TIME;
-		if (! GameEngine::instance->guiInventory.isActive() ) GameEngine::instance->resumeGame();
+		if (! GameEngine::instance->guiInventory.getActive() ) GameEngine::instance->resumeGame();
 	}
 }
 
-void Tutorial::initialise() {
+void Tutorial::onInitialise() {
 }
 
 #define TUTO_CHUNK_VERSION 4

@@ -62,7 +62,7 @@ public :
 	bool loadData(uint32 chunkId, uint32 chunkVersion, TCODZip *zip);
 	void saveData(uint32 chunkId, TCODZip *zip);
 protected :
-	void initialise();
+	void onInitialise() override;
 	void startTuto(TutorialPageId id);
 	float blinkDelay;
 	TutorialPageId id;

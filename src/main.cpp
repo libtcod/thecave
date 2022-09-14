@@ -35,7 +35,7 @@ bool mouseControl=false;
 bool newGame=false;
 SaveGame saveGame;
 UserPref userPref;
-UmbraEngine engine("./data/cfg/umbra.txt",true,true);
+UmbraEngine engine("./data/cfg/umbra.txt",UMBRA_REGISTER_ALL);
 TCODImage background("./data/img/background.png");
 
 int main (int argc, char *argv[]) {
@@ -70,14 +70,14 @@ int main (int argc, char *argv[]) {
 
 	// initialise the engine and register the game screens
 	UmbraModule *forest=new ForestScreen();
-	SCREEN_MAIN_MENU = engine.registerModule(new MainMenu(), SCREEN_NONE);
+	SCREEN_MAIN_MENU = engine.registerModule(new MainMenu());  // fallback SCREEN_NONE
 	char tmp[128];
 	sprintf(tmp,"data/cfg/chapter%d.txg",saveGame.chapter+1);
 //	engine.registerModule(new Game(), SCREEN_NONE);
-	SCREEN_GAME_OVER = engine.registerModule(new EndScreen("You're dead...\n\nEven worse, Zeepoh will probably go with Alena now that you turned into a pile of ashes..."),SCREEN_MAIN_MENU);
-	SCREEN_GAME_WON = engine.registerModule(new EndScreen("Congratulations, you won!\n\nMore important, you'll be able to show off with Alena tomorrow ! But this is another story..."),SCREEN_MAIN_MENU);
-	SCREEN_CHAPTER_1 = engine.registerModule(forest, SCREEN_GAME_WON);
-	SCREEN_STORY = engine.registerModule(new PaperScreen(tmp,"title","text",saveGame.chapter),SCREEN_CHAPTER_1);
+	SCREEN_GAME_OVER = engine.registerModule(new EndScreen("You're dead...\n\nEven worse, Zeepoh will probably go with Alena now that you turned into a pile of ashes..."));  // fallback SCREEN_MAIN_MENU
+	SCREEN_GAME_WON = engine.registerModule(new EndScreen("Congratulations, you won!\n\nMore important, you'll be able to show off with Alena tomorrow ! But this is another story..."));  // fallback SCREEN_MAIN_MENU
+	SCREEN_CHAPTER_1 = engine.registerModule(forest);  // fallback SCREEN_GAME_WON
+	SCREEN_STORY = engine.registerModule(new PaperScreen(tmp,"title","text",saveGame.chapter));  // fallback SCREEN_CHAPTER_1
 	// set fading parameters
  	float fadeTime=Config::getFloat("config.display.fadeTime");
 	((Screen *)engine.getModule(SCREEN_MAIN_MENU))->setFadeIn((int)(fadeTime*1000));

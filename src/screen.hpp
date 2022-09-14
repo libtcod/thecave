@@ -27,7 +27,7 @@
 
 #include "libtcod.hpp"
 
-#include "umbra/module.hpp"
+#include <umbra/umbra.hpp>  // #include <umbra/umbra_module.hpp>
 
 #define SCREEN_NONE -1
 extern int SCREEN_MAIN_MENU;
@@ -60,10 +60,10 @@ protected :
 	enum { FADE_UP, FADE_DOWN, FADE_OFF, FADE_NONE } fade;
 	TCOD_key_t key;
 	TCOD_mouse_t ms;
-	void initialise() { UmbraModule::initialise(); }
+	void onInitialise() override { UmbraModule::onInitialise(); }
 	void prepareImage(TCODImage *img)const;
 	TCODImage *loadChapterPicture(bool big=false);
-	void activate() {
+	void onActivate() override {
             fadeLvl=0;
             fade=FADE_UP;
 	}

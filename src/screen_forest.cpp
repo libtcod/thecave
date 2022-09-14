@@ -345,12 +345,12 @@ bool ForestScreen::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {
 	return true;
 }
 
-void ForestScreen::initialise() {
-	engine.registerModule(tutorial,-1);
-    engine.registerModule(&log,-1);
-    engine.registerModule(&statusPanel,-1);
-    engine.registerModule(&guiInventory,-1);
-    engine.registerModule(&guiLoot,-1);
+void ForestScreen::onInitialise() {
+	engine.registerModule(tutorial);
+    engine.registerModule(&log);
+    engine.registerModule(&statusPanel);
+    engine.registerModule(&guiInventory);
+    engine.registerModule(&guiLoot);
 }
 
 void ForestScreen::placeHouse(Dungeon *dungeon,int doorx, int doory,Entity::Direction dir) {
@@ -643,14 +643,14 @@ void ForestScreen::loadMap(uint32 seed) {
 
 }
 
-void ForestScreen::activate() {
+void ForestScreen::onActivate() {
 	TCODConsole::root->setDefaultBackground(TCODColor::black);
 	TCODConsole::root->clear();
 	// disable fading (to see the progress bar)
 	TCODConsole::setFade(255,TCODColor::black);
     TCODConsole::setColorControl(TCOD_COLCTRL_1,TCODColor(255,255,240),TCODColor::black);
     TCODConsole::setColorControl(TCOD_COLCTRL_2,guiHighlightedText,TCODColor::black);
-	GameEngine::activate();
+	GameEngine::onActivate();
 	tutorial->init();
 	init();
 	log.set.push(&statusPanel);
@@ -694,7 +694,7 @@ void ForestScreen::activate() {
 	}
 }
 
-void ForestScreen::deactivate() {
+void ForestScreen::onDeactivate() {
 	engine.deactivateModule(tutorial);
 	engine.deactivateModule(&log);
 }

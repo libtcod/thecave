@@ -187,8 +187,8 @@ bool Logger::update(float elapsed, TCOD_key_t &k, TCOD_mouse_t &mouse) {
 	con->clear();
 
 	if ( !isMinimized || (rect.mouseHover && ! lookOn
-		&& ! GameEngine::instance->guiLoot.isActive()
-		&& ! GameEngine::instance->guiInventory.isActive()
+		&& ! GameEngine::instance->guiLoot.getActive()
+		&& ! GameEngine::instance->guiInventory.getActive()
 		) ) {
 		titleBarAlpha+=elapsed;
 		titleBarAlpha=MIN(1.0f,titleBarAlpha);

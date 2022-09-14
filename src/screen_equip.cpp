@@ -32,7 +32,7 @@
 EquipScreen::EquipScreen() : Screen(0), pauseOn(false) {
 }
 
-void EquipScreen::activate() {
+void EquipScreen::onActivate() {
 	// generate a random list of items according to the selected school
 	for (int i=0; i < NB_WEAPONS; i++ ) {
 		ItemClass wcol = ITEM_CLASS_STANDARD;
@@ -43,7 +43,7 @@ void EquipScreen::activate() {
 	}
 }
 
-void EquipScreen::deactivate() {
+void EquipScreen::onDeactivate() {
 	weapons.clearAndDelete();
 }
 

@@ -118,8 +118,8 @@ void Inventory::checkDefaultAction(Item *item) {
 			}
 		}
 	}
-	if ( (GameEngine::instance->guiLoot.isActive() && !dropFirst )
-		|| (!GameEngine::instance->guiLoot.isActive() && dropFirst )){
+	if ( (GameEngine::instance->guiLoot.getActive() && !dropFirst )
+		|| (!GameEngine::instance->guiLoot.getActive() && dropFirst )){
 		// bad default action. swap use and drop
 		if ( useAction && dropAction ) {
 			ItemActionId tmp=*useAction;
@@ -300,16 +300,16 @@ void Inventory::activateItem() {
 	}
 }
 
-void Inventory::activate() {
-	Dialog::activate();
-	if ( firstOpen && ! GameEngine::instance->guiLoot.isActive()) {
+void Inventory::onActivate() {
+	Dialog::onActivate();
+	if ( firstOpen && ! GameEngine::instance->guiLoot.getActive()) {
 		firstOpen=false;
 		tutorial->startLiveTuto(TUTO_INVENTORY);
 	}
 }
 
-void Inventory::deactivate() {
-	Dialog::deactivate();
+void Inventory::onDeactivate() {
+	Dialog::onDeactivate();
 	if ( combinationResult ) delete combinationResult;
 	combinationResult=NULL;
 }
@@ -322,7 +322,7 @@ void Inventory::runActionOnItem(ItemActionId id, Item *item) {
 			else initialize(container);
 		break;
 		case ITEM_ACTION_DROP :
-			if ( GameEngine::instance->guiLoot.isActive() ) {
+			if ( GameEngine::instance->guiLoot.getActive() ) {
 				Item *newItem=owner->removeFromInventory(item);
 				GameEngine::instance->guiLoot.container->putInside(newItem);
 				GameEngine::instance->guiLoot.initialize(GameEngine::instance->guiLoot.container);
@@ -335,7 +335,7 @@ void Inventory::runActionOnItem(ItemActionId id, Item *item) {
 		case ITEM_ACTION_TAKE :
 			item->pickup(&GameEngine::instance->player);
 			initialize(container);
-			if ( GameEngine::instance->guiInventory.isActive() ) {
+			if ( GameEngine::instance->guiInventory.getActive() ) {
 				GameEngine::instance->guiInventory.initialize(&GameEngine::instance->player);
 			}
 		break;

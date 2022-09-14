@@ -41,8 +41,8 @@ protected :
 	float noiseZ;
 	bool stats;
 	TCODImage *img;
-	void initialise();
-	void activate();
+	void onInitialise() override;
+	void onActivate() override;
 };
 
 class PaperScreen : public EndScreen, public ITCODSDLRenderer {
@@ -58,7 +58,7 @@ protected :
 	TCODImage *tcodpix;
 	SDL_Surface *pix;
 	int chapter;
-	void initialise();
-	void activate();
-	void deactivate();
+	void onInitialise() override;
+	void onActivate() override;
+	void onDeactivate() override;
 };

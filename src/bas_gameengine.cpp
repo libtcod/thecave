@@ -41,8 +41,8 @@ GameEngine::GameEngine() : Screen(0), pauseOn(false), lookOn(false) {
 	firstFrame=true;
 }
 
-void GameEngine::activate() {
-    Screen::activate();
+void GameEngine::onActivate() {
+    Screen::onActivate();
 	hitFlashAmount=0.0f;
 	firstFrame=true;
 	computeAspectRatio();
@@ -118,7 +118,7 @@ void GameEngine::startRipple(int dungeonx, int dungeony) {
 }
 
 void GameEngine::openCloseInventory() {
-	if ( guiInventory.isActive() ) {
+	if ( guiInventory.getActive() ) {
 		engine.deactivateModule(&guiInventory);
 	} else {
 		guiInventory.initialize(&player);
@@ -127,7 +127,7 @@ void GameEngine::openCloseInventory() {
 }
 
 void GameEngine::openCloseLoot(Item *toLoot) {
-	if ( !guiLoot.isActive() ) {
+	if ( !guiLoot.getActive() ) {
 		guiLoot.initialize(toLoot);
 		engine.activateModule(&guiLoot);
 		guiInventory.initialize(&player);

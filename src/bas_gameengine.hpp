@@ -93,7 +93,7 @@ protected :
 	RippleManager *rippleManager;
 	float hitFlashAmount;
 
-	void activate();
+	void onActivate() override;
 	void computeAspectRatio();
 
 };

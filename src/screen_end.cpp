@@ -31,15 +31,15 @@ EndScreen::EndScreen(const char *txt,float fadeLvl, bool stats)
 	: Screen(fadeLvl),txt(strdup(txt)),noiseZ(0.0f),stats(stats) {
 }
 
-void EndScreen::initialise() {
+void EndScreen::onInitialise() {
 	img=new TCODImage(CON_W*2,CON_H*2);
 	onFontChange();
 }
 
-void EndScreen::activate() {
+void EndScreen::onActivate() {
     // set keyboard mode to RELEASED only
     engine.setKeyboardMode( UMBRA_KEYBOARD_RELEASED );
-    Screen::activate();
+    Screen::onActivate();
 }
 
 void EndScreen::render() {
@@ -174,7 +174,7 @@ PaperScreen::PaperScreen(const char *txgfile, const char  *titlegen, const char 
 	pix=NULL;
 }
 
-void PaperScreen::initialise() {
+void PaperScreen::onInitialise() {
 	tcodpix=loadChapterPicture(false);
 	onFontChange();
 }
@@ -244,12 +244,12 @@ bool PaperScreen::update(float elapsed, TCOD_key_t k,TCOD_mouse_t mouse) {
 	return EndScreen::update(elapsed,k,mouse);
 }
 
-void PaperScreen::activate() {
+void PaperScreen::onActivate() {
 	saveGame.chapter=chapter;
 	TCODSystem::registerSDLRenderer(this);
 }
 
-void PaperScreen::deactivate() {
+void PaperScreen::onDeactivate() {
 	TCODSystem::registerSDLRenderer(NULL);
 	TCODConsole::root->setDirty(0,0,CON_W,CON_H);
 }

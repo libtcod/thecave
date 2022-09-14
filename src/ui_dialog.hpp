@@ -46,9 +46,9 @@ public :
 	bool isClosable() { return (flags & DIALOG_CLOSABLE) != 0 ; }
 	bool isMultiPos() { return (flags & DIALOG_MULTIPOS) != 0 ; }
 	bool isModal() { return (flags & DIALOG_MODAL) != 0 ; }
-	void activate();
+	void onActivate() override;
 	virtual void setPos(int x, int y) { rect.setPos(x,y); }
-	void deactivate();
+	void onDeactivate() override;
 protected :
 	int flags;
 	TCOD_key_t key;

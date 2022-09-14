@@ -37,7 +37,7 @@ public :
 protected :
 	TCODList <Item *> weapons;
 	int mousex,mousey;
-	void activate();
-	void deactivate();
+	void onActivate() override;
+	void onDeactivate() override;
 	bool pauseOn;
 };

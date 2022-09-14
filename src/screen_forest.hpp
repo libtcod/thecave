@@ -44,9 +44,9 @@ public :
 	void saveData(uint32 chunkId, TCODZip *zip);
 protected :
 	TCODRandom *forestRng;
-	void initialise();
-    void activate();
-    void deactivate();
+	void onInitialise() override;
+    void onActivate() override;
+    void onDeactivate() override;
     void placeTree(Dungeon *dungeon,int x, int y, const ItemType * treeType);
 	void setCanopy(int x, int y, const ItemType * treeType);
 	void placeHouse(Dungeon *dungeon,int doorx, int doory,Entity::Direction dir);

@@ -43,13 +43,13 @@ bool Dialog::update() {
     return update(elapsed, key,ms);
 }
 
-void Dialog::activate() {
-	UmbraWidget::activate();
+void Dialog::onActivate() {
+	UmbraWidget::onActivate();
 	if ( isModal() ) GameEngine::instance->pauseGame();
 }
 
-void Dialog::deactivate() {
-	UmbraWidget::deactivate();
+void Dialog::onDeactivate() {
+	UmbraWidget::onDeactivate();
 	if ( isModal() ) GameEngine::instance->resumeGame();
 }
 
