@@ -58,8 +58,8 @@ protected :
     TCODColor fadeOutColor;
 
 	enum { FADE_UP, FADE_DOWN, FADE_OFF, FADE_NONE } fade;
-	TCOD_key_t key;
-	TCOD_mouse_t ms;
+	TCOD_key_t key{};
+	TCOD_mouse_t ms{};
 	void onInitialise() override { UmbraModule::onInitialise(); }
 	void prepareImage(TCODImage *img)const;
 	TCODImage *loadChapterPicture(bool big=false);
