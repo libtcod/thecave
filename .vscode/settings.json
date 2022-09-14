@@ -1,6 +1,9 @@
 {
   "C_Cpp.vcpkg.enabled": true,
   "cmake.sourceDirectory": "${workspaceFolder}",
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
   "editor.formatOnSave": false,
   "editor.defaultFormatter": "xaver.clang-format",
   "editor.rulers": [
@@ -65,6 +68,8 @@
     "xstddef": "cpp",
     "xstring": "cpp",
     "xtr1common": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "charconv": "cpp",
+    "random": "cpp"
   }
 }
