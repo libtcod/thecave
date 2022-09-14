@@ -13,7 +13,8 @@ project(
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")  # Keep all runtime files in one directory.
 
-file(GLOB_RECURSE SOURCE_FILES
+file(
+    GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
     ${PROJECT_SOURCE_DIR}/src/*.cpp
 )
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} thecave.rc)
